@@ -11,69 +11,34 @@ import UIKit
 class ViewController: UIViewController {
     
     var currentCorrectAnswer: String?
+    var currentGameQuestions = question.prepareQuestionsForGame(questionObjects: questionArray, numberOfQuestionsInGame: 10)
     
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var answerLabel0: UIButton!
     @IBOutlet weak var answerLabel1: UIButton!
     @IBOutlet weak var answerLabel2: UIButton!
     @IBOutlet weak var answerLabel3: UIButton!
-    
-    
-    func prepareQuestionsForGame(questionObjects: [question], numberOfQuestions: Int) {
         
-        let shuffledData = questionObjects.shuffled()
-        
-        let unusedQuestions = shuffledData.filter(){$0.isQuestionUsed == .notUsed}
-        let usedQuestions = shuffledData.filter(){$0.isQuestionUsed == .used}
-        
-        print("UNUSED QUESTIONS: \(unusedQuestions.count)")
-        print("USED QUESTIONS: \(usedQuestions.count)")
-        
-        var gameReadyQuestions = [question]()
-    
-        if unusedQuestions.count >= numberOfQuestions {
-            gameReadyQuestions = Array(unusedQuestions.prefix(numberOfQuestions))
-        } else {
-            
-            let neededQuestions = 10 - unusedQuestions.count
-            
-            for i in 0..<10 - neededQuestions {
-                gameReadyQuestions.append(unusedQuestions[i])
-                print("Appending: \(unusedQuestions[i].questionString)")
-            }
-            
-            print("NEEDED: \(neededQuestions)")
-            for i in 0..<neededQuestions {
-                gameReadyQuestions.append(usedQuestions[i])
-                print("Appending: \(usedQuestions[i].questionString)")
-            }
-            
-        }
-        
-        //  MARK THE QUESTIONS THAT HAVE BEEN USED
-        for elements in gameReadyQuestions {
-            if let index = questionArray.firstIndex(where: { $0.questionID == elements.questionID }) {
-                questionArray[index].isQuestionUsed = .used
-            }
-        }
-        
-    }
-    
-    
-    
     
     func presentQuestion(questionObjects: [question]) {
-        let randomQuestion = questionObjects.randomElement()
         
-        answerLabel0.setTitle(randomQuestion?.answers[0], for: .normal)
-        answerLabel1.setTitle(randomQuestion?.answers[1], for: .normal)
-        answerLabel2.setTitle(randomQuestion?.answers[2], for: .normal)
-        answerLabel3.setTitle(randomQuestion?.answers[3], for: .normal)
-        questionLabel.text = randomQuestion?.questionString
-        currentCorrectAnswer = randomQuestion?.correctAnswer
+        let question = questionObjects[0]
+        
+        answerLabel0.setTitle(question.answers[0], for: .normal)
+        answerLabel1.setTitle(question.answers[1], for: .normal)
+        answerLabel2.setTitle(question.answers[2], for: .normal)
+        answerLabel3.setTitle(question.answers[3], for: .normal)
+        questionLabel.text = question.questionString
+        currentCorrectAnswer = question.correctAnswer
+        
+        answerLabel0.tintColor = .systemBlue
+        answerLabel1.tintColor = .systemBlue
+        answerLabel2.tintColor = .systemBlue
+        answerLabel3.tintColor = .systemBlue
     }
     
     func checkAnswer(answer: String) -> Bool {
+        currentGameQuestions.remove(at: 0)
         if answer == currentCorrectAnswer {
             print("Correct answer!")
             return true
@@ -85,8 +50,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        presentQuestion(questionObjects: questionArray)
-        prepareQuestionsForGame(questionObjects: questionArray, numberOfQuestions: 10)
+        presentQuestion(questionObjects: currentGameQuestions)
     }
     
     
@@ -101,7 +65,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func playAgain(_ sender: Any) {
-        prepareQuestionsForGame(questionObjects: questionArray, numberOfQuestions: 10)
+        presentQuestion(questionObjects: currentGameQuestions)
     }
 }
 

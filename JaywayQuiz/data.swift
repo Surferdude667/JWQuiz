@@ -36,4 +36,43 @@ struct question {
         self.correctAnswer = correctAnswer
         self.isQuestionUsed = .notUsed
     }
+    
+    //  PREPARS THE QUESTIONS NEEDED FOR ONE GAME
+    //  CHECKS WHICH QUESTIONS ARE USED AND USES THOSE FIRST
+    //  RETURNS A READY ARRAY OF QUESTIONS
+    static func prepareQuestionsForGame(questionObjects: [question], numberOfQuestionsInGame: Int) -> [question] {
+        
+        let shuffledData = questionObjects.shuffled()
+        
+        let unusedQuestions = shuffledData.filter(){$0.isQuestionUsed == .notUsed}
+        let usedQuestions = shuffledData.filter(){$0.isQuestionUsed == .used}
+                
+        var gameReadyQuestions = [question]()
+    
+        if unusedQuestions.count >= numberOfQuestionsInGame {
+            //  ALL GOOD, ADDING 10 (UNUSED) QUESTIONS
+            gameReadyQuestions = Array(unusedQuestions.prefix(numberOfQuestionsInGame))
+        } else {
+            let neededQuestions = 10 - unusedQuestions.count
+            
+            //  ADDING NEEDED (UNUSED) QUESTIONS
+            for i in 0..<10 - neededQuestions {
+                gameReadyQuestions.append(unusedQuestions[i])
+            }
+            
+            //  ADDING NEEDED (USED) QUESTIONS
+            for i in 0..<neededQuestions {
+                gameReadyQuestions.append(usedQuestions[i])
+            }
+        }
+        
+        //  MARK THE QUESTIONS THAT HAVE BEEN USED
+        for elements in gameReadyQuestions {
+            if let index = questionArray.firstIndex(where: { $0.questionID == elements.questionID }) {
+                questionArray[index].isQuestionUsed = .used
+            }
+        }
+       return gameReadyQuestions
+    }
+    
 }
