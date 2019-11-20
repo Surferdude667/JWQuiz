@@ -15,21 +15,18 @@ class ViewController: UIViewController {
     var timer = Timer()
     
     @IBOutlet weak var questionLabel: UILabel!
-    @IBOutlet weak var answerLabel0: UIButton!
-    @IBOutlet weak var answerLabel1: UIButton!
-    @IBOutlet weak var answerLabel2: UIButton!
-    @IBOutlet weak var answerLabel3: UIButton!
-    
+    @IBOutlet var answerLabel: [UIButton]!
     
     //  Presents a new question and marks the question as .used in original data.
     func presentQuestion(questionObjects: [Question]) {
         
         let currentQuestion = questionObjects[0]
         
-        answerLabel0.setTitle(currentQuestion.answers[0], for: .normal)
-        answerLabel1.setTitle(currentQuestion.answers[1], for: .normal)
-        answerLabel2.setTitle(currentQuestion.answers[2], for: .normal)
-        answerLabel3.setTitle(currentQuestion.answers[3], for: .normal)
+        answerLabel[0].setTitle(currentQuestion.answers[0], for: .normal)
+        answerLabel[1].setTitle(currentQuestion.answers[1], for: .normal)
+        answerLabel[2].setTitle(currentQuestion.answers[2], for: .normal)
+        answerLabel[3].setTitle(currentQuestion.answers[3], for: .normal)
+        
         questionLabel.text = currentQuestion.questionString
         currentCorrectAnswer = currentQuestion.correctAnswer
         
@@ -40,10 +37,10 @@ class ViewController: UIViewController {
     }
     
     func resetQuestion() {
-        answerLabel0.tintColor = .systemBlue
-        answerLabel1.tintColor = .systemBlue
-        answerLabel2.tintColor = .systemBlue
-        answerLabel3.tintColor = .systemBlue
+        answerLabel[0].tintColor = .systemBlue
+        answerLabel[1].tintColor = .systemBlue
+        answerLabel[2].tintColor = .systemBlue
+        answerLabel[3].tintColor = .systemBlue
         
         //  Remove the answer from the list
         if currentGameQuestions.count >= 1 {
@@ -52,12 +49,11 @@ class ViewController: UIViewController {
     }
     
     func disableButtons(_ trueOrFalse: Bool) {
-        answerLabel0.isUserInteractionEnabled = trueOrFalse
-        answerLabel1.isUserInteractionEnabled = trueOrFalse
-        answerLabel2.isUserInteractionEnabled = trueOrFalse
-        answerLabel3.isUserInteractionEnabled = trueOrFalse
+        answerLabel[0].isUserInteractionEnabled = trueOrFalse
+        answerLabel[1].isUserInteractionEnabled = trueOrFalse
+        answerLabel[2].isUserInteractionEnabled = trueOrFalse
+        answerLabel[3].isUserInteractionEnabled = trueOrFalse
     }
-    
     
     func presentNextQuestion() {
         timer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { (timer) in
@@ -102,4 +98,3 @@ class ViewController: UIViewController {
         }
     }
 }
-
