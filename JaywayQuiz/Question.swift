@@ -47,10 +47,10 @@ struct Question {
             //  All good, adding 10 (unused) questions.
             gameReadyQuestions = Array(unusedQuestions.prefix(numberOfQuestionsInGame))
         } else {
-            let neededQuestions = 10 - unusedQuestions.count
+            let neededQuestions = numberOfQuestionsInGame - unusedQuestions.count
             
             //  Adding unused questions.
-            for i in 0..<10 - neededQuestions {
+            for i in 0..<numberOfQuestionsInGame - neededQuestions {
                 gameReadyQuestions.append(unusedQuestions[i])
             }
             

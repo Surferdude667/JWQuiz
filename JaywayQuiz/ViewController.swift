@@ -11,7 +11,8 @@ import UIKit
 class ViewController: UIViewController {
     
     var currentCorrectAnswer: String?
-    var currentGameQuestions = Question.prepareQuestionsForGame(questionObjects: questionArray, numberOfQuestionsInGame: 3)
+    //  GAME CONFIGURATION (IMPORTANT: The number of questions in one game can never exceed the total number of questions accessible.)
+    var currentGameQuestions = Question.prepareQuestionsForGame(questionObjects: questionArray, numberOfQuestionsInGame: 10)
     var timer = Timer()
     
     @IBOutlet weak var questionLabel: UILabel!
@@ -31,8 +32,9 @@ class ViewController: UIViewController {
         currentCorrectAnswer = currentQuestion.correctAnswer
         
         //  MARKS THE QUESTION THAT HAVE BEEN PRESENTED IN THIS ROUND AS .USED IN ORIGINAL DATA
-        if let index = questionArray.firstIndex(where: { $0.questionID == questionArray[0].questionID }) {
+        if let index = questionArray.firstIndex(where: { $0.questionID == currentQuestion.questionID }) {
             questionArray[index].isQuestionUsed = .used
+            print(questionArray[index].questionID)
         }
     }
     
