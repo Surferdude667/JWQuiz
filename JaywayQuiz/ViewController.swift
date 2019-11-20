@@ -11,7 +11,8 @@ import UIKit
 class ViewController: UIViewController {
     
     var currentCorrectAnswer: String?
-    var currentGameQuestions = question.prepareQuestionsForGame(questionObjects: questionArray, numberOfQuestionsInGame: 10)
+    var currentGameQuestions = Question.prepareQuestionsForGame(questionObjects: questionArray, numberOfQuestionsInGame: 10)
+    var timer = Timer()
     
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var answerLabel0: UIButton!
@@ -20,25 +21,50 @@ class ViewController: UIViewController {
     @IBOutlet weak var answerLabel3: UIButton!
         
     
-    func presentQuestion(questionObjects: [question]) {
+    func presentQuestion(questionObjects: [Question]) {
         
-        let question = questionObjects[0]
+        let Question = questionObjects[0]
         
-        answerLabel0.setTitle(question.answers[0], for: .normal)
-        answerLabel1.setTitle(question.answers[1], for: .normal)
-        answerLabel2.setTitle(question.answers[2], for: .normal)
-        answerLabel3.setTitle(question.answers[3], for: .normal)
-        questionLabel.text = question.questionString
-        currentCorrectAnswer = question.correctAnswer
+        print("Present is called! \(Question.questionID)")
         
+        answerLabel0.setTitle(Question.answers[0], for: .normal)
+        answerLabel1.setTitle(Question.answers[1], for: .normal)
+        answerLabel2.setTitle(Question.answers[2], for: .normal)
+        answerLabel3.setTitle(Question.answers[3], for: .normal)
+        questionLabel.text = Question.questionString
+        currentCorrectAnswer = Question.correctAnswer
+        
+        //  MARK THE QUESTIONS THAT HAVE BEEN USED IN THIS GAME
+        if let index = questionArray.firstIndex(where: { $0.questionID == questionArray[0].questionID }) {
+            questionArray[index].isQuestionUsed = .used
+        }
+    }
+    
+    func resetQuestion() {
         answerLabel0.tintColor = .systemBlue
         answerLabel1.tintColor = .systemBlue
         answerLabel2.tintColor = .systemBlue
         answerLabel3.tintColor = .systemBlue
+        
+        //  Remove the answer from the list
+        if currentGameQuestions.count != 1 {
+            print("Removes element!")
+            currentGameQuestions.remove(at: 0)
+        } else {
+            questionLabel.text = "Game is over!"
+        }
     }
     
     func checkAnswer(answer: String) -> Bool {
-        currentGameQuestions.remove(at: 0)
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { (timer) in
+            self.resetQuestion()
+            self.presentQuestion(questionObjects: self.currentGameQuestions)
+        }
+        
+        
+        print("Called!")
+        
         if answer == currentCorrectAnswer {
             print("Correct answer!")
             return true
@@ -65,6 +91,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func playAgain(_ sender: Any) {
+        resetQuestion()
         presentQuestion(questionObjects: currentGameQuestions)
     }
 }
