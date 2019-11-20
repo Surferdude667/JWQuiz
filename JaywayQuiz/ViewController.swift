@@ -12,25 +12,48 @@ class ViewController: UIViewController {
     
     var currentCorrectAnswer: String?
     var currentGameQuestions = [Question]()
-    var timer = Timer()
+    var breakTimer = Timer()
+    var gameTimer = Timer()
+    var currentGameTime: Int?
     
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet var answerLabel: [UIButton]!
+    @IBOutlet weak var timeLabel: UILabel!
     
     //  GAME CONFIGURATION (IMPORTANT: The number of questions in one game can never exceed the total number of questions accessible.)
     func configureAndPlay(startGame: Bool) {
-        currentGameQuestions = Question.prepareQuestionsForGame(questionObjects: questionArray, numberOfQuestionsInGame: 3)
+        currentGameQuestions = Question.prepareQuestionsForGame(questionObjects: questionArray, numberOfQuestionsInGame: 10)
         
         if startGame {
             presentQuestion(questionObjects: currentGameQuestions)
         }
     }
     
+    //  Start game timer from beginning.
+    func startTimer() {
+        gameTimer.invalidate()
+        timeLabel.text = "15"
+        currentGameTime = 14
+        gameTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
+    }
+
+    @objc func updateTime() {
+        timeLabel.text = "\(currentGameTime!)"
+
+        if currentGameTime != 0 {
+            currentGameTime! -= 1
+        } else {
+            gameTimer.invalidate()
+            timeLabel.text = "Bunkers!"
+            print("TIME PASSED!")
+        }
+    }
     
     //  Presents a new question and marks the question as .used in original data.
     func presentQuestion(questionObjects: [Question]) {
-        activeButtons(true)
         let currentQuestion = questionObjects[0]
+        activeButtons(true)
+        startTimer()
         
         answerLabel[0].setTitle(currentQuestion.answers[0], for: .normal)
         answerLabel[1].setTitle(currentQuestion.answers[1], for: .normal)
@@ -63,7 +86,7 @@ class ViewController: UIViewController {
     
     func presentNextQuestion() {
         activeButtons(false)
-        timer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { (timer) in
+        breakTimer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { (timer) in
             self.removeAskedQuestion()
             
             self.answerLabel[0].tintColor = .systemBlue
@@ -102,6 +125,8 @@ class ViewController: UIViewController {
     }
     
     @IBAction func answerButton(_ sender: UIButton) {
+        gameTimer.invalidate()
+        
         if let buttonTitle = sender.title(for: .normal) {
             if checkAnswer(answer: buttonTitle) {
                 sender.tintColor = UIColor.green

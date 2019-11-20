@@ -44,7 +44,7 @@ struct Question {
         var gameReadyQuestions = [Question]()
     
         if unusedQuestions.count >= numberOfQuestionsInGame {
-            //  All good, adding 10 (unused) questions.
+            //  All good, adding only unused questions.
             gameReadyQuestions = Array(unusedQuestions.prefix(numberOfQuestionsInGame))
         } else {
             let neededQuestions = numberOfQuestionsInGame - unusedQuestions.count
