@@ -29,6 +29,27 @@ class ViewController: UIViewController {
         }
     }
     
+    func fiftyFifty() {
+        if answerLabel.count % 2 == 0 {
+            var numberOfAnswers = Array(0..<answerLabel.count)
+            
+            if let indexOfCorrectAnswer = answerLabel.firstIndex(where: { $0.title(for: .normal) == currentCorrectAnswer }) {
+                
+                numberOfAnswers.remove(at: indexOfCorrectAnswer)
+                let randomized = numberOfAnswers.shuffled()
+                let wrongAnswers = randomized.prefix(answerLabel.count / 2)
+                
+                for elements in wrongAnswers {
+                    answerLabel[elements].tintColor = UIColor.black
+                }
+            }
+        } else {
+            print("50/50 only works with an even number of answers.")
+        }
+    }
+    
+    
+    
     //  Start game timer from beginning.
     func startTimer() {
         gameTimer.invalidate()
@@ -36,10 +57,10 @@ class ViewController: UIViewController {
         currentGameTime = 14
         gameTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
     }
-
+    
     @objc func updateTime() {
         timeLabel.text = "\(currentGameTime!)"
-
+        
         if currentGameTime != 0 {
             currentGameTime! -= 1
         } else {
@@ -55,10 +76,10 @@ class ViewController: UIViewController {
         activeButtons(true)
         startTimer()
         
-        answerLabel[0].setTitle(currentQuestion.answers[0], for: .normal)
-        answerLabel[1].setTitle(currentQuestion.answers[1], for: .normal)
-        answerLabel[2].setTitle(currentQuestion.answers[2], for: .normal)
-        answerLabel[3].setTitle(currentQuestion.answers[3], for: .normal)
+        //  Sets the labels to the current answers
+        for i in 0..<answerLabel.count {
+            answerLabel[i].setTitle(currentQuestion.answers[i], for: .normal)
+        }
         
         questionLabel.text = currentQuestion.questionString
         currentCorrectAnswer = currentQuestion.correctAnswer
@@ -70,18 +91,18 @@ class ViewController: UIViewController {
         }
     }
     
-     //  Remove the answer from the current game list.
+    //  Remove the answer from the current game list.
     func removeAskedQuestion() {
         if currentGameQuestions.count >= 1 {
             currentGameQuestions.remove(at: 0)
         }
     }
     
+    //  Enables or disables buttons. (Active: true, Disabled: false)
     func activeButtons(_ trueOrFalse: Bool) {
-        answerLabel[0].isUserInteractionEnabled = trueOrFalse
-        answerLabel[1].isUserInteractionEnabled = trueOrFalse
-        answerLabel[2].isUserInteractionEnabled = trueOrFalse
-        answerLabel[3].isUserInteractionEnabled = trueOrFalse
+        for i in 0..<answerLabel.count {
+            answerLabel[i].isUserInteractionEnabled = trueOrFalse
+        }
     }
     
     func presentNextQuestion() {
@@ -89,10 +110,9 @@ class ViewController: UIViewController {
         breakTimer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { (timer) in
             self.removeAskedQuestion()
             
-            self.answerLabel[0].tintColor = .systemBlue
-            self.answerLabel[1].tintColor = .systemBlue
-            self.answerLabel[2].tintColor = .systemBlue
-            self.answerLabel[3].tintColor = .systemBlue
+            for i in 0..<self.answerLabel.count {
+                self.answerLabel[i].tintColor = .systemBlue
+            }
             
             if self.currentGameQuestions.count != 0 {
                 self.presentQuestion(questionObjects: self.currentGameQuestions)
@@ -123,6 +143,19 @@ class ViewController: UIViewController {
     @IBAction func newGame(_ sender: Any) {
         configureAndPlay(startGame: true)
     }
+    
+    
+    @IBAction func extraSecondsButton(_ sender: Any) {
+        if currentGameTime != nil {
+            currentGameTime! += 10
+        }
+        
+    }
+    
+    @IBAction func fiftyFiftyButton(_ sender: Any) {
+        fiftyFifty()
+    }
+    
     
     @IBAction func answerButton(_ sender: UIButton) {
         gameTimer.invalidate()
