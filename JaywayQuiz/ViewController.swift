@@ -14,33 +14,44 @@ class ViewController: UIViewController {
     var currentGameQuestions = [Question]()
     var breakTimer = Timer()
     var gameTimer = Timer()
-    var currentGameTime: Int?
+    var currentGameTime: Int!
+    var numberOfAllowedFiftyFifty: Int!
+    var numberOfAllowedPlus10: Int!
+    var numberOfSecondsBetweenQuestions: Int!
+    
     
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet var answerLabel: [UIButton]!
     @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var fiftyFiftyLabel: UIButton!
+    @IBOutlet weak var extraSecondsLabel: UIButton!
     
     //  GAME CONFIGURATION (IMPORTANT: The number of questions in one game can never exceed the total number of questions accessible.)
-    func configureAndPlay(startGame: Bool) {
-        currentGameQuestions = Question.prepareQuestionsForGame(questionObjects: questionArray, numberOfQuestionsInGame: 10)
+    func configureAndPlay(startGame: Bool, questionsInGame: Int, numberOfFiftyFifty: Int, numberOfPlus10: Int, secondsBetweenQuestions: Int) {
+        currentGameQuestions = Question.prepareQuestionsForGame(questionObjects: questionArray, numberOfQuestionsInGame: questionsInGame)
+        numberOfAllowedFiftyFifty = numberOfFiftyFifty
+        numberOfAllowedPlus10 = numberOfPlus10
+        numberOfSecondsBetweenQuestions = secondsBetweenQuestions
         
         if startGame {
             presentQuestion(questionObjects: currentGameQuestions)
         }
     }
     
+    
     func fiftyFifty() {
         if answerLabel.count % 2 == 0 {
+            
             var numberOfAnswers = Array(0..<answerLabel.count)
             
             if let indexOfCorrectAnswer = answerLabel.firstIndex(where: { $0.title(for: .normal) == currentCorrectAnswer }) {
-                
                 numberOfAnswers.remove(at: indexOfCorrectAnswer)
                 let randomized = numberOfAnswers.shuffled()
                 let wrongAnswers = randomized.prefix(answerLabel.count / 2)
                 
-                for elements in wrongAnswers {
-                    answerLabel[elements].tintColor = UIColor.black
+                for i in wrongAnswers {
+                    answerLabel[i].tintColor = UIColor.black
+                    answerLabel[i].isUserInteractionEnabled = false
                 }
             }
         } else {
@@ -49,12 +60,11 @@ class ViewController: UIViewController {
     }
     
     
-    
-    //  Start game timer from beginning.
+    //  Start Game Timer!
     func startTimer() {
         gameTimer.invalidate()
-        timeLabel.text = "15"
-        currentGameTime = 14
+        timeLabel.text = "\(numberOfSecondsBetweenQuestions!)"
+        currentGameTime = numberOfSecondsBetweenQuestions! - 1
         gameTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
     }
     
@@ -70,11 +80,27 @@ class ViewController: UIViewController {
         }
     }
     
+    func resetControls() {
+        startTimer()
+        activeButtons(true)
+        
+        for i in 0..<self.answerLabel.count {
+            self.answerLabel[i].tintColor = .systemBlue
+        }
+        
+        if numberOfAllowedFiftyFifty != 0 {
+            fiftyFiftyLabel.isHidden = false
+        }
+        
+        if numberOfAllowedPlus10 != 0 {
+            extraSecondsLabel.isHidden = false
+        }
+    }
+    
     //  Presents a new question and marks the question as .used in original data.
     func presentQuestion(questionObjects: [Question]) {
         let currentQuestion = questionObjects[0]
-        activeButtons(true)
-        startTimer()
+        resetControls()
         
         //  Sets the labels to the current answers
         for i in 0..<answerLabel.count {
@@ -87,7 +113,6 @@ class ViewController: UIViewController {
         //  MARKS THE QUESTION THAT HAVE BEEN PRESENTED IN THIS ROUND AS .USED IN ORIGINAL DATA.
         if let index = questionArray.firstIndex(where: { $0.questionID == currentQuestion.questionID }) {
             questionArray[index].isQuestionUsed = .used
-            print(questionArray[index].questionID)
         }
     }
     
@@ -109,10 +134,6 @@ class ViewController: UIViewController {
         activeButtons(false)
         breakTimer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { (timer) in
             self.removeAskedQuestion()
-            
-            for i in 0..<self.answerLabel.count {
-                self.answerLabel[i].tintColor = .systemBlue
-            }
             
             if self.currentGameQuestions.count != 0 {
                 self.presentQuestion(questionObjects: self.currentGameQuestions)
@@ -137,23 +158,34 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureAndPlay(startGame: true)
+        configureAndPlay(startGame: true, questionsInGame: 10, numberOfFiftyFifty: 1, numberOfPlus10: 1, secondsBetweenQuestions: 20)
     }
     
     @IBAction func newGame(_ sender: Any) {
-        configureAndPlay(startGame: true)
+        configureAndPlay(startGame: true, questionsInGame: 10, numberOfFiftyFifty: 1, numberOfPlus10: 1, secondsBetweenQuestions: 20)
     }
     
     
-    @IBAction func extraSecondsButton(_ sender: Any) {
-        if currentGameTime != nil {
-            currentGameTime! += 10
-        }
+    @IBAction func extraSecondsButton(_ sender: UIButton) {
+        sender.isHidden = true
         
+        if numberOfAllowedPlus10 > 0 {
+            numberOfAllowedPlus10 -= 1
+            currentGameTime += 10
+        } else {
+            print("+10 already used")
+        }
     }
     
-    @IBAction func fiftyFiftyButton(_ sender: Any) {
-        fiftyFifty()
+    @IBAction func fiftyFiftyButton(_ sender: UIButton) {
+        sender.isHidden = true
+        
+        if numberOfAllowedFiftyFifty! > 0 {
+            fiftyFifty()
+            numberOfAllowedFiftyFifty! -= 1
+        } else {
+            print("50/50 already used")
+        }
     }
     
     
