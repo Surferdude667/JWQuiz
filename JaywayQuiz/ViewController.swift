@@ -10,6 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    //  USED IN GAME
     var currentCorrectAnswer: String?
     var currentGameQuestions = [Question]()
     var breakTimer = Timer()
@@ -33,11 +34,17 @@ class ViewController: UIViewController {
         numberOfAllowedPlus10 = numberOfPlus10
         numberOfSecondsBetweenQuestions = secondsBetweenQuestions
         
+        resultTime.removeAll()
+        resultCorrectAnswer = 0
+        resultWrongAnswer = 0
+        resutlUnanswered = 0
+        resultLifelinesUsed = 0
+        resultPack = nil
+        
         if startGame {
             presentQuestion(questionObjects: currentGameQuestions)
         }
     }
-    
     
     func fiftyFifty() {
         if answerLabel.count % 2 == 0 {
@@ -59,7 +66,6 @@ class ViewController: UIViewController {
         }
     }
     
-    
     //  Start Game Timer!
     func startTimer() {
         gameTimer.invalidate()
@@ -76,7 +82,9 @@ class ViewController: UIViewController {
         } else {
             gameTimer.invalidate()
             timeLabel.text = "Bunkers!"
-            print("TIME PASSED!")
+            resutlUnanswered += 1
+            presentNextQuestion()
+            print("TIME PASSED! Moving on...")
         }
     }
     
@@ -132,21 +140,22 @@ class ViewController: UIViewController {
     
     func presentNextQuestion() {
         activeButtons(false)
+        
         breakTimer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { (timer) in
             self.removeAskedQuestion()
+            resultTime.append(self.currentGameTime)
             
             if self.currentGameQuestions.count != 0 {
                 self.presentQuestion(questionObjects: self.currentGameQuestions)
             } else if self.currentGameQuestions.count == 0 {
                 print("Game over")
                 self.questionLabel.text = "Game is over!"
+                Result.captureResult()
             }
         }
     }
     
     func checkAnswer(answer: String) -> Bool {
-        presentNextQuestion()
-        
         if answer == currentCorrectAnswer {
             print("Correct answer!")
             return true
@@ -158,16 +167,17 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureAndPlay(startGame: true, questionsInGame: 10, numberOfFiftyFifty: 1, numberOfPlus10: 1, secondsBetweenQuestions: 20)
+        configureAndPlay(startGame: true, questionsInGame: 4, numberOfFiftyFifty: 1, numberOfPlus10: 1, secondsBetweenQuestions: 10)
     }
     
     @IBAction func newGame(_ sender: Any) {
-        configureAndPlay(startGame: true, questionsInGame: 10, numberOfFiftyFifty: 1, numberOfPlus10: 1, secondsBetweenQuestions: 20)
+        configureAndPlay(startGame: true, questionsInGame: 4, numberOfFiftyFifty: 1, numberOfPlus10: 1, secondsBetweenQuestions: 10)
     }
     
     
     @IBAction func extraSecondsButton(_ sender: UIButton) {
         sender.isHidden = true
+        resultLifelinesUsed += 1
         
         if numberOfAllowedPlus10 > 0 {
             numberOfAllowedPlus10 -= 1
@@ -179,6 +189,7 @@ class ViewController: UIViewController {
     
     @IBAction func fiftyFiftyButton(_ sender: UIButton) {
         sender.isHidden = true
+        resultLifelinesUsed += 1
         
         if numberOfAllowedFiftyFifty! > 0 {
             fiftyFifty()
@@ -191,12 +202,15 @@ class ViewController: UIViewController {
     
     @IBAction func answerButton(_ sender: UIButton) {
         gameTimer.invalidate()
+        presentNextQuestion()
         
         if let buttonTitle = sender.title(for: .normal) {
             if checkAnswer(answer: buttonTitle) {
                 sender.tintColor = UIColor.green
+                resultCorrectAnswer += 1
             } else {
                 sender.tintColor = UIColor.red
+                resultWrongAnswer += 1
             }
         }
     }
