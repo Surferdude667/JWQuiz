@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class GameViewController: UIViewController {
    
     var currentCorrectAnswer: String?
     var currentGameQuestions = [Question]()
@@ -34,12 +34,13 @@ class ViewController: UIViewController {
         numberOfSecondsBetweenQuestions = secondsBetweenQuestions
         Result.resetResult()
 
-        
         if startGame {
             presentQuestion()
         }
     }
     
+    //  Disabels half of the answers - but only 2 that is wrong.
+    //  50/50 only works with an even number of answers.
     func fiftyFifty() {
         if answerLabel.count % 2 == 0 {
             
@@ -55,12 +56,10 @@ class ViewController: UIViewController {
                     answerLabel[i].isUserInteractionEnabled = false
                 }
             }
-        } else {
-            print("50/50 only works with an even number of answers.")
         }
     }
     
-    //  Start Game Timer!
+    //  Start game timer.
     func startTimer() {
         gameTimer.invalidate()
         timeLabel.text = "\(numberOfSecondsBetweenQuestions!)"
@@ -68,6 +67,11 @@ class ViewController: UIViewController {
         gameTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        Result.captureResult()
+    }
+    
+    //  Update game time label.
     @objc func updateTime() {
         timeLabel.text = "\(currentGameTime!)"
         
@@ -82,6 +86,7 @@ class ViewController: UIViewController {
         }
     }
     
+    //  Resets the controls when a new question is presented.
     func resetControls() {
         startTimer()
         activeButtons(true)
@@ -102,6 +107,7 @@ class ViewController: UIViewController {
     //  Presents a new question and marks the question as .used in original data.
     func presentQuestion() {
         currentPresentedQuestion = currentGameQuestions[0]
+        currentCorrectAnswer = currentPresentedQuestion.correctAnswer
         Question.markQuestionsAsUsed(questionToRemove: currentPresentedQuestion)
         resetControls()
         
@@ -111,7 +117,7 @@ class ViewController: UIViewController {
         }
         
         questionLabel.text = currentPresentedQuestion.questionString
-        currentCorrectAnswer = currentPresentedQuestion.correctAnswer
+        
     }
     
     //  Remove the answer from the current game list.
@@ -128,6 +134,7 @@ class ViewController: UIViewController {
         }
     }
     
+    //  Fires the next question.
     func presentNextQuestion() {
         activeButtons(false)
         
@@ -138,14 +145,12 @@ class ViewController: UIViewController {
             if self.currentGameQuestions.count != 0 {
                 self.presentQuestion()
             } else if self.currentGameQuestions.count == 0 {
-                print("Game over")
                 self.questionLabel.text = "Game is over!"
-                Result.captureResult()
-                print(resultPack!.answerTime)
             }
         }
     }
     
+    //  Checks if the answer selected is correct.
     func checkAnswer(answer: String) -> Bool {
         if answer == currentCorrectAnswer {
             print("Correct answer!")
@@ -158,13 +163,14 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureAndPlay(startGame: true, questionsInGame: 5, numberOfFiftyFifty: 1, numberOfPlus10: 1, secondsBetweenQuestions: 2)
+        configureAndPlay(startGame: true, questionsInGame: 5, numberOfFiftyFifty: 1, numberOfPlus10: 1, secondsBetweenQuestions: 15)
     }
     
     //  ----------- ACTIONS -----------
     
-    @IBAction func newGame(_ sender: Any) {
-        configureAndPlay(startGame: true, questionsInGame: 5, numberOfFiftyFifty: 1, numberOfPlus10: 1, secondsBetweenQuestions: 2)
+
+    @IBAction func seeResultButton(_ sender: Any) {
+        self.performSegue(withIdentifier: "presentResult", sender: self)
     }
     
     
