@@ -161,14 +161,14 @@ class GameViewController: UIViewController {
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         configureAndPlay(startGame: true, questionsInGame: 5, numberOfFiftyFifty: 1, numberOfPlus10: 1, secondsBetweenQuestions: 15)
     }
     
+    
     //  ----------- ACTIONS -----------
     
-
     @IBAction func seeResultButton(_ sender: Any) {
         self.performSegue(withIdentifier: "presentResult", sender: self)
     }
