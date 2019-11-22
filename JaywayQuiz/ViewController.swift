@@ -9,18 +9,17 @@
 import UIKit
 
 class ViewController: UIViewController {
-    
-    //  USED IN GAME
+   
     var currentCorrectAnswer: String?
     var currentGameQuestions = [Question]()
-    var breakTimer = Timer()
-    var gameTimer = Timer()
     var currentGameTime: Int!
+    var currentPresentedQuestion: Question!
     var numberOfAllowedFiftyFifty: Int!
     var numberOfAllowedPlus10: Int!
     var numberOfSecondsBetweenQuestions: Int!
-    
-    
+    var breakTimer = Timer()
+    var gameTimer = Timer()
+
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet var answerLabel: [UIButton]!
     @IBOutlet weak var timeLabel: UILabel!
@@ -33,16 +32,11 @@ class ViewController: UIViewController {
         numberOfAllowedFiftyFifty = numberOfFiftyFifty
         numberOfAllowedPlus10 = numberOfPlus10
         numberOfSecondsBetweenQuestions = secondsBetweenQuestions
-        
-        resultTime.removeAll()
-        resultCorrectAnswer = 0
-        resultWrongAnswer = 0
-        resutlUnanswered = 0
-        resultLifelinesUsed = 0
-        resultPack = nil
+        Result.resetResult()
+
         
         if startGame {
-            presentQuestion(questionObjects: currentGameQuestions)
+            presentQuestion()
         }
     }
     
@@ -106,22 +100,18 @@ class ViewController: UIViewController {
     }
     
     //  Presents a new question and marks the question as .used in original data.
-    func presentQuestion(questionObjects: [Question]) {
-        let currentQuestion = questionObjects[0]
+    func presentQuestion() {
+        currentPresentedQuestion = currentGameQuestions[0]
+        Question.markQuestionsAsUsed(questionToRemove: currentPresentedQuestion)
         resetControls()
         
         //  Sets the labels to the current answers
         for i in 0..<answerLabel.count {
-            answerLabel[i].setTitle(currentQuestion.answers[i], for: .normal)
+            answerLabel[i].setTitle(currentPresentedQuestion.answers[i], for: .normal)
         }
         
-        questionLabel.text = currentQuestion.questionString
-        currentCorrectAnswer = currentQuestion.correctAnswer
-        
-        //  MARKS THE QUESTION THAT HAVE BEEN PRESENTED IN THIS ROUND AS .USED IN ORIGINAL DATA.
-        if let index = questionArray.firstIndex(where: { $0.questionID == currentQuestion.questionID }) {
-            questionArray[index].isQuestionUsed = .used
-        }
+        questionLabel.text = currentPresentedQuestion.questionString
+        currentCorrectAnswer = currentPresentedQuestion.correctAnswer
     }
     
     //  Remove the answer from the current game list.
@@ -146,11 +136,12 @@ class ViewController: UIViewController {
             resultTime.append(self.currentGameTime)
             
             if self.currentGameQuestions.count != 0 {
-                self.presentQuestion(questionObjects: self.currentGameQuestions)
+                self.presentQuestion()
             } else if self.currentGameQuestions.count == 0 {
                 print("Game over")
                 self.questionLabel.text = "Game is over!"
                 Result.captureResult()
+                print(resultPack!.answerTime)
             }
         }
     }
@@ -167,11 +158,13 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureAndPlay(startGame: true, questionsInGame: 4, numberOfFiftyFifty: 1, numberOfPlus10: 1, secondsBetweenQuestions: 10)
+        configureAndPlay(startGame: true, questionsInGame: 5, numberOfFiftyFifty: 1, numberOfPlus10: 1, secondsBetweenQuestions: 2)
     }
     
+    //  ----------- ACTIONS -----------
+    
     @IBAction func newGame(_ sender: Any) {
-        configureAndPlay(startGame: true, questionsInGame: 4, numberOfFiftyFifty: 1, numberOfPlus10: 1, secondsBetweenQuestions: 10)
+        configureAndPlay(startGame: true, questionsInGame: 5, numberOfFiftyFifty: 1, numberOfPlus10: 1, secondsBetweenQuestions: 2)
     }
     
     

@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+
 struct Question {
     let questionID: Int
     let questionString: String
@@ -61,4 +62,13 @@ struct Question {
         }
        return gameReadyQuestions
     }
+    
+    static func markQuestionsAsUsed(questionToRemove: Question) {
+        //  MARKS THE QUESTION THAT HAVE BEEN PRESENTED IN THIS ROUND AS .USED IN ORIGINAL DATA.
+        if let index = questionArray.firstIndex(where: { $0.questionID == questionToRemove.questionID }) {
+            questionArray[index].isQuestionUsed = .used
+            print(questionArray[index].questionID)
+        }
+    }
+    
 }

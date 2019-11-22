@@ -8,21 +8,31 @@
 
 import Foundation
 
-var resultPack: Result?
+
 
 //  USED FOR RESULT
+var resultPack: Result?
 var resultTime = [Int]()
 var resultCorrectAnswer: Int!
 var resultWrongAnswer: Int!
 var resutlUnanswered: Int!
 var resultLifelinesUsed: Int!
 
-struct Result {
+class Result {
+    
     var correctAnswers: Int
     var wrongAnswers: Int
     var unansweredAnswers: Int
     var answerTime = [Int]()
     var lifelinesUsed: Int
+    
+    init(correctAnswers: Int, wrongAnswers: Int, unansweredAnswers: Int, answerTime: [Int], lifelinesUsed: Int) {
+        self.correctAnswers = correctAnswers
+        self.wrongAnswers = wrongAnswers
+        self.unansweredAnswers = unansweredAnswers
+        self.answerTime = answerTime
+        self.lifelinesUsed = lifelinesUsed
+    }
     
     static func captureResult() {
         resultPack = Result(correctAnswers: resultCorrectAnswer,
@@ -30,7 +40,16 @@ struct Result {
                                  unansweredAnswers: resutlUnanswered,
                                  answerTime: resultTime,
                                  lifelinesUsed: resultLifelinesUsed)
-        print(resultPack!)
     }
+    
+    static func resetResult() {
+        resultTime.removeAll()
+        resultCorrectAnswer = 0
+        resultWrongAnswer = 0
+        resutlUnanswered = 0
+        resultLifelinesUsed = 0
+        resultPack = nil
+    }
+    
 }
 
