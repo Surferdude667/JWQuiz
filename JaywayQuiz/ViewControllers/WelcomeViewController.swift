@@ -13,7 +13,8 @@ class WelcomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("Hello world!")
+        JSONParser.fetchData()
+        
     }
     
     @IBAction func startGameButton(_ sender: Any) {

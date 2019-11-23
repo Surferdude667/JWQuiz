@@ -8,8 +8,6 @@
 
 import UIKit
 
-
-
 class GameViewController: UIViewController {
     
     var questionsInCurrentGame = [Question]()
@@ -18,7 +16,7 @@ class GameViewController: UIViewController {
     var currentGameTime: Int!
     
     var breakTimer = Timer()
-    var gameTimer = Timer()
+    var questionTimer = Timer()
 
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet var answerLabel: [UIButton]!
@@ -55,13 +53,12 @@ class GameViewController: UIViewController {
     }
     
     
-    //MOVE TIMER TO SEPERATE FILE
-    //  Start game timer.
+    //  Start question timer.
     func startTimer() {
-        gameTimer.invalidate()
+        questionTimer.invalidate()
         timeLabel.text = "\(config.numberOfSecondsForQuestion)"
         currentGameTime = config.numberOfSecondsForQuestion - 1
-        gameTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
+        questionTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -75,7 +72,7 @@ class GameViewController: UIViewController {
         if currentGameTime != 0 {
             currentGameTime! -= 1
         } else {
-            gameTimer.invalidate()
+            questionTimer.invalidate()
             timeLabel.text = "Bunkers!"
             resutlUnanswered += 1
             presentNextQuestion()
@@ -196,7 +193,7 @@ class GameViewController: UIViewController {
     
     
     @IBAction func answerButton(_ sender: UIButton) {
-        gameTimer.invalidate()
+        questionTimer.invalidate()
         presentNextQuestion()
         
         if let buttonTitle = sender.title(for: .normal) {

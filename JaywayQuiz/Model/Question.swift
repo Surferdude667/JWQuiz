@@ -10,10 +10,10 @@ import Foundation
 import UIKit
 
 
-struct Question {
+class Question {
     let questionID: Int
     let questionString: String
-    let questionImage: UIImage?
+    let questionImage: String?
     let answers: [String]
     let correctAnswer: String
     var isQuestionUsed: used
@@ -23,7 +23,7 @@ struct Question {
         case notUsed
     }
     
-    init(questionID: Int, questionString: String, questionImage: UIImage?, answers: [String], correctAnswer: String) {
+    init(questionID: Int, questionString: String, questionImage: String?, answers: [String], correctAnswer: String) {
         self.questionID = questionID
         self.questionString = questionString
         self.questionImage = questionImage
@@ -32,6 +32,7 @@ struct Question {
         self.isQuestionUsed = .notUsed
     }
     
+        
     //  PREPARS THE QUESTIONS NEEDED FOR ONE GAME
     //  CHECKS WHICH QUESTIONS ARE USED AND USES THOSE FIRST
     //  RETURNS A READY ARRAY OF QUESTIONS
