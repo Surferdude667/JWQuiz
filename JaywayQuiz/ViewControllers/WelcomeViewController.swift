@@ -13,13 +13,10 @@ class WelcomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         print("Hello world!")
     }
-    @IBAction func startGameButton(_ sender: Any) {
-        
-        performSegue(withIdentifier: "presentGame", sender: self)
-        
-    }
     
+    @IBAction func startGameButton(_ sender: Any) {
+        performSegue(withIdentifier: "presentGame", sender: self)
+    }
 }

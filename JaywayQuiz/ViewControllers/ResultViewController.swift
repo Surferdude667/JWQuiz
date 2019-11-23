@@ -17,6 +17,12 @@ class ResultViewController: UIViewController {
     @IBOutlet weak var slowestAnswertimeLabel: UILabel!
     @IBOutlet weak var lifelinesUsedLabel: UILabel!
     
+    //  SHARE RESULT - Maybe?
+    
+    func calculateTimes() {
+        // Calculate times.
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,9 +33,6 @@ class ResultViewController: UIViewController {
             unanswerdAnswersLabel.text = "Unanswerd: \(results.unansweredAnswers)"
             lifelinesUsedLabel.text = "Lifelines used: \(results.lifelinesUsed)"
         }
-        
-        print("Hello world of results!")
-        print(resultPack!.answerTime)
     }
     
     @IBAction func playAgainButton(_ sender: Any) {

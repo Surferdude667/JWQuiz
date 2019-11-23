@@ -8,15 +8,15 @@
 
 import UIKit
 
+
+
 class GameViewController: UIViewController {
-   
-    var currentCorrectAnswer: String?
-    var currentGameQuestions = [Question]()
-    var currentGameTime: Int!
+    
+    var questionsInCurrentGame = [Question]()
     var currentPresentedQuestion: Question!
-    var numberOfAllowedFiftyFifty: Int!
-    var numberOfAllowedPlus10: Int!
-    var numberOfSecondsBetweenQuestions: Int!
+    var currentCorrectAnswer: String?
+    var currentGameTime: Int!
+    
     var breakTimer = Timer()
     var gameTimer = Timer()
 
@@ -26,17 +26,12 @@ class GameViewController: UIViewController {
     @IBOutlet weak var fiftyFiftyLabel: UIButton!
     @IBOutlet weak var extraSecondsLabel: UIButton!
     
-    //  GAME CONFIGURATION (IMPORTANT: The number of questions in one game can never exceed the total number of questions accessible.)
-    func configureAndPlay(startGame: Bool, questionsInGame: Int, numberOfFiftyFifty: Int, numberOfPlus10: Int, secondsBetweenQuestions: Int) {
-        currentGameQuestions = Question.prepareQuestionsForGame(questionObjects: questionArray, numberOfQuestionsInGame: questionsInGame)
-        numberOfAllowedFiftyFifty = numberOfFiftyFifty
-        numberOfAllowedPlus10 = numberOfPlus10
-        numberOfSecondsBetweenQuestions = secondsBetweenQuestions
+    //  CONFIGURE & PLAY - Happy times! <:)
+    func configureAndPlay() {
+        config = Configuration.init()
+        questionsInCurrentGame = Question.prepareQuestionsForGame(questionObjects: questionArray)
         Result.resetResult()
-
-        if startGame {
-            presentQuestion()
-        }
+        presentQuestion()
     }
     
     //  Disabels half of the answers - but only 2 that is wrong.
@@ -59,11 +54,13 @@ class GameViewController: UIViewController {
         }
     }
     
+    
+    //MOVE TIMER TO SEPERATE FILE
     //  Start game timer.
     func startTimer() {
         gameTimer.invalidate()
-        timeLabel.text = "\(numberOfSecondsBetweenQuestions!)"
-        currentGameTime = numberOfSecondsBetweenQuestions! - 1
+        timeLabel.text = "\(config.numberOfSecondsForQuestion)"
+        currentGameTime = config.numberOfSecondsForQuestion - 1
         gameTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
     }
     
@@ -95,18 +92,18 @@ class GameViewController: UIViewController {
             self.answerLabel[i].tintColor = .systemBlue
         }
         
-        if numberOfAllowedFiftyFifty != 0 {
+        if config.numberOfFiftyFifty != 0 {
             fiftyFiftyLabel.isHidden = false
         }
         
-        if numberOfAllowedPlus10 != 0 {
+        if config.numberOfExtraSeconds != 0 {
             extraSecondsLabel.isHidden = false
         }
     }
     
     //  Presents a new question and marks the question as .used in original data.
     func presentQuestion() {
-        currentPresentedQuestion = currentGameQuestions[0]
+        currentPresentedQuestion = questionsInCurrentGame[0]
         currentCorrectAnswer = currentPresentedQuestion.correctAnswer
         Question.markQuestionsAsUsed(questionToRemove: currentPresentedQuestion)
         resetControls()
@@ -117,13 +114,12 @@ class GameViewController: UIViewController {
         }
         
         questionLabel.text = currentPresentedQuestion.questionString
-        
     }
     
     //  Remove the answer from the current game list.
     func removeAskedQuestion() {
-        if currentGameQuestions.count >= 1 {
-            currentGameQuestions.remove(at: 0)
+        if questionsInCurrentGame.count >= 1 {
+            questionsInCurrentGame.remove(at: 0)
         }
     }
     
@@ -142,9 +138,9 @@ class GameViewController: UIViewController {
             self.removeAskedQuestion()
             resultTime.append(self.currentGameTime)
             
-            if self.currentGameQuestions.count != 0 {
+            if self.questionsInCurrentGame.count != 0 {
                 self.presentQuestion()
-            } else if self.currentGameQuestions.count == 0 {
+            } else if self.questionsInCurrentGame.count == 0 {
                 self.questionLabel.text = "Game is over!"
             }
         }
@@ -163,7 +159,7 @@ class GameViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        configureAndPlay(startGame: true, questionsInGame: 5, numberOfFiftyFifty: 1, numberOfPlus10: 1, secondsBetweenQuestions: 15)
+        configureAndPlay()
     }
     
     
@@ -178,8 +174,8 @@ class GameViewController: UIViewController {
         sender.isHidden = true
         resultLifelinesUsed += 1
         
-        if numberOfAllowedPlus10 > 0 {
-            numberOfAllowedPlus10 -= 1
+        if config.numberOfExtraSeconds > 0 {
+            config.numberOfExtraSeconds -= 1
             currentGameTime += 10
         } else {
             print("+10 already used")
@@ -190,9 +186,9 @@ class GameViewController: UIViewController {
         sender.isHidden = true
         resultLifelinesUsed += 1
         
-        if numberOfAllowedFiftyFifty! > 0 {
+        if config.numberOfFiftyFifty > 0 {
             fiftyFifty()
-            numberOfAllowedFiftyFifty! -= 1
+            config.numberOfFiftyFifty -= 1
         } else {
             print("50/50 already used")
         }

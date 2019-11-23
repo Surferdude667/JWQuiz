@@ -35,7 +35,7 @@ struct Question {
     //  PREPARS THE QUESTIONS NEEDED FOR ONE GAME
     //  CHECKS WHICH QUESTIONS ARE USED AND USES THOSE FIRST
     //  RETURNS A READY ARRAY OF QUESTIONS
-    static func prepareQuestionsForGame(questionObjects: [Question], numberOfQuestionsInGame: Int) -> [Question] {
+    static func prepareQuestionsForGame(questionObjects: [Question]) -> [Question] {
         
         let shuffledData = questionObjects.shuffled()
         
@@ -44,14 +44,14 @@ struct Question {
                 
         var gameReadyQuestions = [Question]()
     
-        if unusedQuestions.count >= numberOfQuestionsInGame {
+        if unusedQuestions.count >= config.numberOfQuestionsInGame {
             //  All good, adding only unused questions.
-            gameReadyQuestions = Array(unusedQuestions.prefix(numberOfQuestionsInGame))
+            gameReadyQuestions = Array(unusedQuestions.prefix(config.numberOfQuestionsInGame))
         } else {
-            let neededQuestions = numberOfQuestionsInGame - unusedQuestions.count
+            let neededQuestions = config.numberOfQuestionsInGame - unusedQuestions.count
             
             //  Adding unused questions.
-            for i in 0..<numberOfQuestionsInGame - neededQuestions {
+            for i in 0..<config.numberOfQuestionsInGame - neededQuestions {
                 gameReadyQuestions.append(unusedQuestions[i])
             }
             

@@ -9,6 +9,7 @@
 import Foundation
 
 
+//ADD AVERAGE TIME!
 
 //  USED FOR RESULT
 var resultPack: Result?
@@ -52,4 +53,3 @@ class Result {
     }
     
 }
-
