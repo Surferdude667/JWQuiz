@@ -113,6 +113,10 @@
                                     <action selector="seeResultButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="py8-3w-8YG"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7H7-U0-rPx">
+                                <rect key="frame" x="157" y="425" width="100" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -121,6 +125,7 @@
                     <connections>
                         <outlet property="extraSecondsLabel" destination="5dB-oc-Uqx" id="k3e-nh-cXF"/>
                         <outlet property="fiftyFiftyLabel" destination="ZdF-Nm-C5z" id="yfr-9b-vaq"/>
+                        <outlet property="questionImageLabel" destination="7H7-U0-rPx" id="dOg-iE-AsT"/>
                         <outlet property="questionLabel" destination="1Bq-2N-WFi" id="cVy-Mz-8iP"/>
                         <outlet property="timeLabel" destination="2f5-Bu-cqL" id="9Uf-dw-dnP"/>
                         <outletCollection property="answerLabel" destination="ZGJ-Nk-Isb" collectionClass="NSMutableArray" id="3j3-8X-sgj"/>

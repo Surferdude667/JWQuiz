@@ -20,10 +20,10 @@ class Configuration {
     var numberOfExtraSeconds = 1
     
     //  Number of seconds for each question.
-    var numberOfSecondsForQuestion = 15
+    var numberOfSecondsForQuestion = 2
     
     //  Number of questions to be presented in one game.
     //  (IMPORTANT: The number of questions in one game can never
     //  exceed the total number of questions accessible.)
-    var numberOfQuestionsInGame = 10
+    var numberOfQuestionsInGame = 15
 }

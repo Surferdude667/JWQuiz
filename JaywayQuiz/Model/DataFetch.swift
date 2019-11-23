@@ -7,23 +7,42 @@
 //
 
 import Foundation
+import UIKit
+
+extension UIImageView {
+   func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
+      URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
+   }
+   func fetchImage(from url: URL) {
+      getData(from: url) {
+         data, response, error in
+         guard let data = data, error == nil else {
+            return
+         }
+         DispatchQueue.main.async() {
+            self.image = UIImage(data: data)
+         }
+      }
+   }
+}
+
 
 var questionArray = [Question]()
 
-struct JSONParser: Codable {
+struct DataFetch: Codable {
     let questionID: Int
     let questionString: String
     let questionImage: String
     let answers: [String]
     let correctAnswer: String
     
-    static func fetchData() {
-        
+    static func fetchQuestionData()  {
         if let url = URL(string: "https://bjornlau.com/API/questions.json") {
             URLSession.shared.dataTask(with: url) { data, response, error in
                 if let data = data {
                     do {
-                        let result = try JSONDecoder().decode([JSONParser].self, from: data)
+                        let result = try JSONDecoder().decode([DataFetch].self, from: data)
+                        
                         for i in 0..<result.count {
                             questionArray.append(Question(questionID: result[i].questionID,
                                                           questionString: result[i].questionString,
@@ -38,8 +57,5 @@ struct JSONParser: Codable {
             }.resume()
         }
     }
+    
 }
-
-
-
-

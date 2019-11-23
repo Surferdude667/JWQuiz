@@ -6,6 +6,7 @@
 //  Copyright © 2019 Bjørn Lau Jørgensen. All rights reserved.
 //
 
+
 import UIKit
 
 class GameViewController: UIViewController {
@@ -23,6 +24,7 @@ class GameViewController: UIViewController {
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var fiftyFiftyLabel: UIButton!
     @IBOutlet weak var extraSecondsLabel: UIButton!
+    @IBOutlet weak var questionImageLabel: UIImageView!
     
     //  CONFIGURE & PLAY - Happy times! <:)
     func configureAndPlay() {
@@ -84,6 +86,7 @@ class GameViewController: UIViewController {
     func resetControls() {
         startTimer()
         activeButtons(true)
+        questionImageLabel.image = nil
         
         for i in 0..<self.answerLabel.count {
             self.answerLabel[i].tintColor = .systemBlue
@@ -98,6 +101,9 @@ class GameViewController: UIViewController {
         }
     }
     
+    
+
+    
     //  Presents a new question and marks the question as .used in original data.
     func presentQuestion() {
         currentPresentedQuestion = questionsInCurrentGame[0]
@@ -105,11 +111,17 @@ class GameViewController: UIViewController {
         Question.markQuestionsAsUsed(questionToRemove: currentPresentedQuestion)
         resetControls()
         
-        //  Sets the labels to the current answers
+        //  Sets the labels to the current answers.
         for i in 0..<answerLabel.count {
             answerLabel[i].setTitle(currentPresentedQuestion.answers[i], for: .normal)
         }
         
+        //  Fetches images from server.
+        if currentPresentedQuestion.questionImage.isEmpty {
+        } else {
+            let url = URL(string: "https://bjornlau.com\(currentPresentedQuestion.questionImage)")!
+            self.questionImageLabel.fetchImage(from: url)
+        }
         questionLabel.text = currentPresentedQuestion.questionString
     }
     

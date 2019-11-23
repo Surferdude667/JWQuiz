@@ -13,7 +13,7 @@ import UIKit
 class Question {
     let questionID: Int
     let questionString: String
-    let questionImage: String?
+    let questionImage: String
     let answers: [String]
     let correctAnswer: String
     var isQuestionUsed: used
@@ -23,7 +23,7 @@ class Question {
         case notUsed
     }
     
-    init(questionID: Int, questionString: String, questionImage: String?, answers: [String], correctAnswer: String) {
+    init(questionID: Int, questionString: String, questionImage: String, answers: [String], correctAnswer: String) {
         self.questionID = questionID
         self.questionString = questionString
         self.questionImage = questionImage
