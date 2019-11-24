@@ -168,20 +168,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tGm-rU-jLz">
-                                <rect key="frame" x="20" y="315" width="374" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dKV-Td-bfR">
-                                <rect key="frame" x="20" y="344" width="374" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PzT-O3-abQ">
                                 <rect key="frame" x="20" y="373" width="374" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -197,15 +183,21 @@
                                     <action selector="playAgainButton:" destination="tKo-1X-ja5" eventType="touchUpInside" id="Hzc-Lx-C8T"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J4f-gD-ssc">
+                                <rect key="frame" x="20" y="443" width="374" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="V0Q-yi-DX3"/>
                     </view>
                     <connections>
+                        <outlet property="averageTimeLabel" destination="J4f-gD-ssc" id="foD-yf-5oG"/>
                         <outlet property="correctAnswersLabel" destination="G3s-wT-eok" id="3aZ-aL-e5V"/>
-                        <outlet property="fastestAnswertimeLabel" destination="tGm-rU-jLz" id="ksg-B1-bdB"/>
                         <outlet property="lifelinesUsedLabel" destination="PzT-O3-abQ" id="fzd-XW-2vh"/>
-                        <outlet property="slowestAnswertimeLabel" destination="dKV-Td-bfR" id="Nn6-ls-X6v"/>
                         <outlet property="unanswerdAnswersLabel" destination="8q3-AE-CJ5" id="6Jh-84-ppE"/>
                         <outlet property="wrongAnswersLabel" destination="5Zq-35-LsE" id="80b-z0-qRo"/>
                     </connections>

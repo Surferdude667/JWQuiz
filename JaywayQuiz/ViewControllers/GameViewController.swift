@@ -84,6 +84,18 @@ class GameViewController: UIViewController {
             presentNextQuestion()
             print("TIME PASSED! Moving on...")
         }
+        
+        if currentGameTime < 5000 {
+            extraSecondsLabel.tintColor = UIColor.orange
+        }
+        
+        if currentGameTime < config.numberOfMillisecondsForQuestion - config.numberOfPlusMiliseconds  {
+            extraSecondsLabel.tintColor = UIColor.orange
+        }
+        
+        if currentGameTime < config.numberOfMsLeftToActivateFiftyFifty {
+            fiftyFiftyLabel.tintColor = UIColor.orange
+        }
     }
     
     //  Resets the controls when a new question is presented.
@@ -187,7 +199,7 @@ class GameViewController: UIViewController {
         
         if config.numberOfExtraSeconds > 0 {
             config.numberOfExtraSeconds -= 1
-            currentGameTime += 10
+            currentGameTime += config.numberOfPlusMiliseconds
         } else {
             print("+10 already used")
         }
