@@ -13,7 +13,7 @@ import Foundation
 
 //  USED FOR RESULT
 var resultPack: Result?
-var resultTime = [Int]()
+var resultTime = [Double]()
 var resultCorrectAnswer: Int!
 var resultWrongAnswer: Int!
 var resutlUnanswered: Int!
@@ -24,10 +24,10 @@ class Result {
     var correctAnswers: Int
     var wrongAnswers: Int
     var unansweredAnswers: Int
-    var answerTime = [Int]()
+    var answerTime = [Double]()
     var lifelinesUsed: Int
     
-    init(correctAnswers: Int, wrongAnswers: Int, unansweredAnswers: Int, answerTime: [Int], lifelinesUsed: Int) {
+    init(correctAnswers: Int, wrongAnswers: Int, unansweredAnswers: Int, answerTime: [Double], lifelinesUsed: Int) {
         self.correctAnswers = correctAnswers
         self.wrongAnswers = wrongAnswers
         self.unansweredAnswers = unansweredAnswers

@@ -14,7 +14,7 @@ class GameViewController: UIViewController {
     var questionsInCurrentGame = [Question]()
     var currentPresentedQuestion: Question!
     var currentCorrectAnswer: String?
-    var currentGameTime: Int!
+    var currentGameTime: Double!
     
     var breakTimer = Timer()
     var questionTimer = Timer()
@@ -32,6 +32,11 @@ class GameViewController: UIViewController {
         questionsInCurrentGame = Question.prepareQuestionsForGame(questionObjects: questionArray)
         Result.resetResult()
         presentQuestion()
+    }
+    
+    //  Capture result before segue.
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        Result.captureResult()
     }
     
     //  Disabels half of the answers - but only 2 that is wrong.
@@ -58,21 +63,20 @@ class GameViewController: UIViewController {
     //  Start question timer.
     func startTimer() {
         questionTimer.invalidate()
-        timeLabel.text = "\(config.numberOfSecondsForQuestion)"
-        currentGameTime = config.numberOfSecondsForQuestion - 1
-        questionTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
+        timeLabel.text = "\(config.numberOfMillisecondsForQuestion)"
+        currentGameTime = config.numberOfMillisecondsForQuestion - 1.0
+        questionTimer = Timer.scheduledTimer(timeInterval: 0.001, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        Result.captureResult()
-    }
     
     //  Update game time label.
     @objc func updateTime() {
-        timeLabel.text = "\(currentGameTime!)"
-        
-        if currentGameTime != 0 {
-            currentGameTime! -= 1
+        let msToS = currentGameTime / 1000
+        let oneDigitFormat = String(format: "%.1f", msToS)
+        timeLabel.text = "\(oneDigitFormat)"
+
+        if currentGameTime != 0.0 {
+            currentGameTime! -= 1.0
         } else {
             questionTimer.invalidate()
             timeLabel.text = "Bunkers!"

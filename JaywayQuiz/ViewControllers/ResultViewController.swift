@@ -33,6 +33,9 @@ class ResultViewController: UIViewController {
             unanswerdAnswersLabel.text = "Unanswerd: \(results.unansweredAnswers)"
             lifelinesUsedLabel.text = "Lifelines used: \(results.lifelinesUsed)"
         }
+        
+        print(resultPack!.answerTime)
+        
     }
     
     @IBAction func playAgainButton(_ sender: Any) {
