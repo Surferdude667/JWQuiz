@@ -102,8 +102,6 @@ class GameViewController: UIViewController {
     }
     
     
-
-    
     //  Presents a new question and marks the question as .used in original data.
     func presentQuestion() {
         currentPresentedQuestion = questionsInCurrentGame[0]
