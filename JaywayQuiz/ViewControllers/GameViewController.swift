@@ -25,6 +25,9 @@ class GameViewController: UIViewController {
     @IBOutlet weak var fiftyFiftyLabel: UIButton!
     @IBOutlet weak var extraSecondsLabel: UIButton!
     @IBOutlet weak var questionImageLabel: UIImageView!
+    @IBOutlet weak var imageQuestionLabel: UILabel!
+    @IBOutlet weak var resultOverlay: UIView!
+    
     
     //  CONFIGURE & PLAY - Happy times! <:)
     func configureAndPlay() {
@@ -32,6 +35,7 @@ class GameViewController: UIViewController {
         questionsInCurrentGame = Question.prepareQuestionsForGame(questionObjects: questionArray)
         Result.resetResult()
         presentQuestion()
+        resultOverlay.isHidden = true
     }
     
     //  Capture result before segue.
@@ -52,7 +56,7 @@ class GameViewController: UIViewController {
                 let wrongAnswers = randomized.prefix(answerLabel.count / 2)
                 
                 for i in wrongAnswers {
-                    answerLabel[i].tintColor = UIColor.black
+                    answerLabel[i].alpha = 0.5
                     answerLabel[i].isUserInteractionEnabled = false
                 }
             }
@@ -132,11 +136,14 @@ class GameViewController: UIViewController {
         
         //  Fetches images from server.
         if currentPresentedQuestion.questionImage.isEmpty {
+            questionLabel.text = currentPresentedQuestion.questionString
+            imageQuestionLabel.text = nil
         } else {
             let url = URL(string: "https://bjornlau.com\(currentPresentedQuestion.questionImage)")!
             self.questionImageLabel.fetchImage(from: url)
+            questionLabel.text = nil
+            imageQuestionLabel.text = currentPresentedQuestion.questionString
         }
-        questionLabel.text = currentPresentedQuestion.questionString
     }
     
     //  Remove the answer from the current game list.
@@ -153,6 +160,13 @@ class GameViewController: UIViewController {
         }
     }
     
+    
+    func setView(view: UIView, hidden: Bool) {
+        UIView.transition(with: view, duration: 0.5, options: .transitionCrossDissolve, animations: {
+            view.isHidden = hidden
+        })
+    }
+    
     //  Fires the next question.
     func presentNextQuestion() {
         activeButtons(false)
@@ -164,7 +178,11 @@ class GameViewController: UIViewController {
             if self.questionsInCurrentGame.count != 0 {
                 self.presentQuestion()
             } else if self.questionsInCurrentGame.count == 0 {
-                self.questionLabel.text = "Game is over!"
+                //self.questionLabel.text = "Game is over!"
+                //self.resultOverlay.isHidden = false
+                
+                self.setView(view: self.resultOverlay, hidden: false)
+                
             }
         }
     }
@@ -224,7 +242,8 @@ class GameViewController: UIViewController {
         
         if let buttonTitle = sender.title(for: .normal) {
             if checkAnswer(answer: buttonTitle) {
-                sender.tintColor = UIColor.green
+                sender.setTitleColor(UIColor.green, for: .normal)
+                sender.backgroundColor = UIColor.red
                 resultCorrectAnswer += 1
             } else {
                 sender.tintColor = UIColor.red

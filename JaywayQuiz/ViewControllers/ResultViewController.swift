@@ -24,7 +24,7 @@ class ResultViewController: UIViewController {
             correctAnswersLabel.text = "Correct: \(results.correctAnswers)"
             wrongAnswersLabel.text = "Wrong: \(results.wrongAnswers)"
             unanswerdAnswersLabel.text = "Unanswerd: \(results.unansweredAnswers)"
-            lifelinesUsedLabel.text = "Lifelines used: \(results.lifelinesUsed)"
+            lifelinesUsedLabel.text = "Lifelines used: \(results.lifelinesUsed)/2"
             
             let sum = results.answerTime.reduce(0, +)
             let avg = sum / Double(results.answerTime.count)
