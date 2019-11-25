@@ -11,9 +11,23 @@ import UIKit
 
 class WelcomeViewController: UIViewController {
     
+    
+    @IBOutlet weak var startGameButton: SpringButton!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         DataFetch.fetchQuestionData()
+        
+        startGameButton.animation = "pop"
+        startGameButton.curve = "easeInOut"
+        startGameButton.duration = 1.5
+        startGameButton.scaleX = 1.8
+        startGameButton.scaleY = 1.8
+        startGameButton.rotate = 2.4
+        startGameButton.damping = 1.0
+        startGameButton.velocity = 0.0
+        startGameButton.animate()
         
     }
     

@@ -21,9 +21,9 @@ class GameViewController: UIViewController {
 
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet var answerLabel: [UIButton]!
-    @IBOutlet weak var timeLabel: UILabel!
-    @IBOutlet weak var fiftyFiftyLabel: UIButton!
-    @IBOutlet weak var extraSecondsLabel: UIButton!
+    @IBOutlet weak var timeLabel: SpringLabel!
+    @IBOutlet weak var fiftyFiftyLabel: SpringButton!
+    @IBOutlet weak var extraSecondsLabel: SpringButton!
     @IBOutlet weak var questionImageLabel: UIImageView!
     @IBOutlet weak var imageQuestionLabel: UILabel!
     @IBOutlet weak var resultOverlay: UIView!
@@ -69,6 +69,12 @@ class GameViewController: UIViewController {
         questionTimer.invalidate()
         timeLabel.text = "\(config.numberOfMillisecondsForQuestion)"
         currentGameTime = config.numberOfMillisecondsForQuestion - 1.0
+        
+        timeLabel.animation = "squeezeDown"
+        timeLabel.curve = "easeIn"
+        timeLabel.duration = 1.0
+        timeLabel.animate()
+        
         questionTimer = Timer.scheduledTimer(timeInterval: 0.001, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
     }
     
@@ -87,16 +93,31 @@ class GameViewController: UIViewController {
             presentNextQuestion()
         }
         
-        if currentGameTime < config.numberOfMillisecondsForQuestion - config.numberOfPlusMiliseconds && config.numberOfExtraSeconds != 0  {
+        if currentGameTime == config.numberOfMillisecondsForQuestion - config.numberOfPlusMiliseconds && config.numberOfExtraSeconds != 0  {
             extraSecondsLabel.setBackgroundImage(UIImage(named: "plus10_active"), for: .normal)
             extraSecondsLabel.isUserInteractionEnabled = true
+            extraSecondsLabel.alpha = 1.0
+            
+            extraSecondsLabel.animation = "pop"
+            extraSecondsLabel.curve = "easeInOut"
+            extraSecondsLabel.duration = 1.0
+            extraSecondsLabel.animate()
         }
         
-        if currentGameTime < config.numberOfMsLeftToActivateFiftyFifty && config.numberOfFiftyFifty != 0 {
+        if currentGameTime == config.numberOfMsLeftToActivateFiftyFifty && config.numberOfFiftyFifty != 0 {
+            fiftyFiftyLabel.animate()
             fiftyFiftyLabel.setBackgroundImage(UIImage(named: "fiftyfifty_active"), for: .normal)
             fiftyFiftyLabel.isUserInteractionEnabled = true
+            fiftyFiftyLabel.alpha = 1.0
+            
+            fiftyFiftyLabel.animation = "pop"
+            fiftyFiftyLabel.curve = "easeInOut"
+            fiftyFiftyLabel.duration = 1.0
+            fiftyFiftyLabel.animate()
         }
     }
+    
+    
     
     //  Resets the controls when a new question is presented.
     func resetControls() {
@@ -105,7 +126,6 @@ class GameViewController: UIViewController {
         questionImageLabel.image = nil
         
         for i in 0..<self.answerLabel.count {
-            //self.answerLabel[i].setTitleColor(UIColor.black, for: .normal)
             self.answerLabel[i].backgroundColor = UIColor.white
             self.answerLabel[i].alpha = 1.0
             self.answerLabel[i].setTitleColor(ColorAndAnimation().swiftyGreen, for: .normal)
@@ -114,13 +134,13 @@ class GameViewController: UIViewController {
         fiftyFiftyLabel.isUserInteractionEnabled = false
         if config.numberOfFiftyFifty != 0 {
             fiftyFiftyLabel.setBackgroundImage(UIImage(named: "fiftyfifty_inactive"), for: .normal)
-            fiftyFiftyLabel.alpha = 1.0
+            fiftyFiftyLabel.alpha = 0.3
         }
         
         extraSecondsLabel.isUserInteractionEnabled = false
         if config.numberOfExtraSeconds != 0 {
             extraSecondsLabel.setBackgroundImage(UIImage(named: "plus10_inactive"), for: .normal)
-            extraSecondsLabel.alpha = 1.0
+            extraSecondsLabel.alpha = 0.3
         }
     }
     

@@ -37,7 +37,7 @@
                                     <constraint firstAttribute="width" constant="374" id="BPh-hW-Bwi"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fzj-Mp-nJl">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fzj-Mp-nJl" customClass="SpringButton" customModule="JaywayQuiz" customModuleProvider="target">
                                 <rect key="frame" x="87" y="507" width="240" height="50"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -74,6 +74,7 @@
                         <viewLayoutGuide key="safeArea" id="SKL-8N-Ewb"/>
                     </view>
                     <connections>
+                        <outlet property="startGameButton" destination="fzj-Mp-nJl" id="5Aq-xQ-cg5"/>
                         <segue destination="BYZ-38-t0r" kind="presentation" identifier="presentGame" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="0Dv-ge-zha"/>
                     </connections>
                 </viewController>
@@ -102,7 +103,7 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5dB-oc-Uqx">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5dB-oc-Uqx" customClass="SpringButton" customModule="JaywayQuiz" customModuleProvider="target">
                                 <rect key="frame" x="-15" y="94" width="184" height="90"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="184" id="9Ca-SF-tIA"/>
@@ -115,7 +116,7 @@
                                     <action selector="extraSecondsButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Z35-s5-Yjx"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZdF-Nm-C5z">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZdF-Nm-C5z" customClass="SpringButton" customModule="JaywayQuiz" customModuleProvider="target">
                                 <rect key="frame" x="245" y="94" width="184" height="91"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="184" id="Cdm-qu-E2J"/>
@@ -230,7 +231,7 @@
                                     <constraint firstItem="5Jk-tK-u31" firstAttribute="leading" secondItem="HE3-xC-dvc" secondAttribute="trailing" constant="14" id="wqV-JW-zau"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2f5-Bu-cqL">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2f5-Bu-cqL" customClass="SpringLabel" customModule="JaywayQuiz" customModuleProvider="target">
                                 <rect key="frame" x="156" y="94" width="102" height="69"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="102" id="U8T-RM-2aA"/>
