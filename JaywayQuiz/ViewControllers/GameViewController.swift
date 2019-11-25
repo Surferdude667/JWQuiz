@@ -213,7 +213,7 @@ class GameViewController: UIViewController {
     
     @IBAction func extraSecondsButton(_ sender: UIButton) {
         extraSecondsLabel.isUserInteractionEnabled = false
-        extraSecondsLabel.alpha = 0.5
+        extraSecondsLabel.alpha = 0.2
         resultLifelinesUsed += 1
         config.numberOfExtraSeconds -= 1
         currentGameTime += config.numberOfPlusMiliseconds
@@ -221,7 +221,7 @@ class GameViewController: UIViewController {
     
     @IBAction func fiftyFiftyButton(_ sender: UIButton) {
         fiftyFiftyLabel.isUserInteractionEnabled = false
-        fiftyFiftyLabel.alpha = 0.5
+        fiftyFiftyLabel.alpha = 0.2
         resultLifelinesUsed += 1
         config.numberOfFiftyFifty -= 1
         fiftyFifty()

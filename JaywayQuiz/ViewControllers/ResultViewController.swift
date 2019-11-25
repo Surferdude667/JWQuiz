@@ -21,10 +21,10 @@ class ResultViewController: UIViewController {
         super.viewDidLoad()
 
         if let results = resultPack {
-            correctAnswersLabel.text = "Correct: \(results.correctAnswers)"
-            wrongAnswersLabel.text = "Wrong: \(results.wrongAnswers)"
-            unanswerdAnswersLabel.text = "Unanswerd: \(results.unansweredAnswers)"
-            lifelinesUsedLabel.text = "Lifelines used: \(results.lifelinesUsed)/2"
+            correctAnswersLabel.text = "\(results.correctAnswers)"
+            wrongAnswersLabel.text = "\(results.wrongAnswers)"
+            unanswerdAnswersLabel.text = "\(results.unansweredAnswers)"
+            lifelinesUsedLabel.text = "\(results.lifelinesUsed)/2"
             
             let sum = results.answerTime.reduce(0, +)
             let avg = sum / Double(results.answerTime.count)
