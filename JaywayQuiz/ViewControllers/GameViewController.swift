@@ -6,7 +6,6 @@
 //  Copyright © 2019 Bjørn Lau Jørgensen. All rights reserved.
 //
 
-
 import UIKit
 
 class GameViewController: UIViewController {
@@ -20,11 +19,11 @@ class GameViewController: UIViewController {
     var questionTimer = Timer()
 
     @IBOutlet weak var questionLabel: UILabel!
-    @IBOutlet var answerLabel: [UIButton]!
+    @IBOutlet var answerLabel: [SpringButton]!
     @IBOutlet weak var timeLabel: SpringLabel!
     @IBOutlet weak var fiftyFiftyLabel: SpringButton!
     @IBOutlet weak var extraSecondsLabel: SpringButton!
-    @IBOutlet weak var questionImageLabel: UIImageView!
+    @IBOutlet weak var questionImageView: UIImageView!
     @IBOutlet weak var imageQuestionLabel: UILabel!
     @IBOutlet weak var resultOverlay: UIView!
     
@@ -89,6 +88,8 @@ class GameViewController: UIViewController {
             currentGameTime! -= 1.0
         } else {
             questionTimer.invalidate()
+            questionLabel.textColor = Color().unanswerdYellow
+            imageQuestionLabel.textColor = Color().unanswerdYellow
             resutlUnanswered += 1
             presentNextQuestion()
         }
@@ -117,18 +118,18 @@ class GameViewController: UIViewController {
         }
     }
     
-    
-    
     //  Resets the controls when a new question is presented.
     func resetControls() {
         startTimer()
         activeButtons(true)
-        questionImageLabel.image = nil
+        questionImageView.image = nil
+        questionLabel.textColor = UIColor.white
+        imageQuestionLabel.textColor = UIColor.white
         
         for i in 0..<self.answerLabel.count {
             self.answerLabel[i].backgroundColor = UIColor.white
             self.answerLabel[i].alpha = 1.0
-            self.answerLabel[i].setTitleColor(ColorAndAnimation().swiftyGreen, for: .normal)
+            self.answerLabel[i].setTitleColor(Color().swiftyGreen, for: .normal)
         }
         
         fiftyFiftyLabel.isUserInteractionEnabled = false
@@ -143,7 +144,6 @@ class GameViewController: UIViewController {
             extraSecondsLabel.alpha = 0.3
         }
     }
-    
     
     //  Presents a new question and marks the question as .used in original data.
     func presentQuestion() {
@@ -163,7 +163,7 @@ class GameViewController: UIViewController {
             imageQuestionLabel.text = nil
         } else {
             let url = URL(string: "https://bjornlau.com\(currentPresentedQuestion.questionImage)")!
-            self.questionImageLabel.fetchImage(from: url)
+            self.questionImageView.fetchImage(from: url)
             questionLabel.text = nil
             imageQuestionLabel.text = currentPresentedQuestion.questionString
         }
@@ -184,14 +184,12 @@ class GameViewController: UIViewController {
         }
     }
     
-    
     //  Move to animation file
     func setView(view: UIView, hidden: Bool) {
         UIView.transition(with: view, duration: 0.5, options: .transitionCrossDissolve, animations: {
             view.isHidden = hidden
         })
     }
-    
     
     //  Fires the next question.
     func presentNextQuestion() {
@@ -214,6 +212,13 @@ class GameViewController: UIViewController {
         if answer == currentCorrectAnswer {
             return true
         } else {
+            if let index = currentPresentedQuestion.answers.firstIndex(where: { currentCorrectAnswer! == $0 }) {
+                answerLabel[index].backgroundColor = Color().correctGreen
+                answerLabel[index].animation = "flash"
+                answerLabel[index].curve = "easeIn"
+                answerLabel[index].duration = 0.2
+                answerLabel[index].animate()
+            }
             return false
         }
     }
@@ -223,13 +228,12 @@ class GameViewController: UIViewController {
         configureAndPlay()
     }
     
-    
     @IBAction func seeResultButton(_ sender: Any) {
         self.performSegue(withIdentifier: "presentResult", sender: self)
     }
     
+    
     //  ----------- ACTIONS -----------
-        
     
     @IBAction func extraSecondsButton(_ sender: UIButton) {
         extraSecondsLabel.isUserInteractionEnabled = false
@@ -247,7 +251,6 @@ class GameViewController: UIViewController {
         fiftyFifty()
     }
     
-    
     @IBAction func answerButton(_ sender: UIButton) {
         questionTimer.invalidate()
         presentNextQuestion()
@@ -255,13 +258,14 @@ class GameViewController: UIViewController {
         if let buttonTitle = sender.title(for: .normal) {
             if checkAnswer(answer: buttonTitle) {
                 sender.setTitleColor(UIColor.black, for: .normal)
-                sender.backgroundColor = ColorAndAnimation().correctGreen
+                sender.backgroundColor = Color().correctGreen
                 resultCorrectAnswer += 1
             } else {
                 sender.setTitleColor(UIColor.black, for: .normal)
-                sender.backgroundColor = ColorAndAnimation().wrongRed
+                sender.backgroundColor = Color().wrongRed
                 resultWrongAnswer += 1
             }
         }
     }
+    
 }

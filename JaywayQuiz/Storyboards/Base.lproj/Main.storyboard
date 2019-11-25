@@ -137,7 +137,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6JU-oG-f5X">
                                 <rect key="frame" x="0.0" y="655" width="414" height="157"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HE3-xC-dvc">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HE3-xC-dvc" customClass="SpringButton" customModule="JaywayQuiz" customModuleProvider="target">
                                         <rect key="frame" x="20" y="84" width="180" height="50"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -156,7 +156,7 @@
                                             <action selector="answerButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="FyN-wh-h3w"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Jk-tK-u31">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Jk-tK-u31" customClass="SpringButton" customModule="JaywayQuiz" customModuleProvider="target">
                                         <rect key="frame" x="214" y="84" width="180" height="50"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -175,7 +175,7 @@
                                             <action selector="answerButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lpz-2m-qUP"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kU7-ki-keW">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kU7-ki-keW" customClass="SpringButton" customModule="JaywayQuiz" customModuleProvider="target">
                                         <rect key="frame" x="214" y="20" width="180" height="50"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -194,7 +194,7 @@
                                             <action selector="answerButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Zso-K9-bbn"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZGJ-Nk-Isb">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZGJ-Nk-Isb" customClass="SpringButton" customModule="JaywayQuiz" customModuleProvider="target">
                                         <rect key="frame" x="20" y="20" width="180" height="50"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -326,7 +326,7 @@
                         <outlet property="extraSecondsLabel" destination="5dB-oc-Uqx" id="k3e-nh-cXF"/>
                         <outlet property="fiftyFiftyLabel" destination="ZdF-Nm-C5z" id="yfr-9b-vaq"/>
                         <outlet property="imageQuestionLabel" destination="fUQ-fU-6p1" id="uzF-bD-sor"/>
-                        <outlet property="questionImageLabel" destination="7H7-U0-rPx" id="dOg-iE-AsT"/>
+                        <outlet property="questionImageView" destination="7H7-U0-rPx" id="dOg-iE-AsT"/>
                         <outlet property="questionLabel" destination="1Bq-2N-WFi" id="cVy-Mz-8iP"/>
                         <outlet property="resultOverlay" destination="h66-OF-UWb" id="bMH-ab-ecf"/>
                         <outlet property="timeLabel" destination="2f5-Bu-cqL" id="9Uf-dw-dnP"/>
@@ -449,7 +449,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Correct" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g1K-XF-Bcz">
-                                        <rect key="frame" x="40" y="67" width="113" height="41"/>
+                                        <rect key="frame" x="40.5" y="67" width="112.5" height="41"/>
                                         <fontDescription key="fontDescription" name="FeltTipRoman-Bold" family="Felt Tip Roman" pointSize="35"/>
                                         <color key="textColor" red="0.69461917880000001" green="0.99583786730000001" blue="0.75683009619999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <nil key="highlightedColor"/>

@@ -26,7 +26,6 @@ extension UIImageView {
    }
 }
 
-
 var questionArray = [Question]()
 
 struct DataFetch: Codable {
@@ -37,7 +36,7 @@ struct DataFetch: Codable {
     let correctAnswer: String
     
     static func fetchQuestionData()  {
-        if let url = URL(string: "https://bjornlau.com/API/questions.json") {
+        if let url = URL(string: "https://bjornlau.com/API/questions_final.json") {
             URLSession.shared.dataTask(with: url) { data, response, error in
                 if let data = data {
                     do {

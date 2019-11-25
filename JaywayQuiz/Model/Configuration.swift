@@ -35,5 +35,5 @@ class Configuration {
     //  Number of questions to be presented in one game.
     //  (IMPORTANT: The number of questions in one game can never
     //  exceed the total number of questions accessible.)
-    let numberOfQuestionsInGame = 4
+    let numberOfQuestionsInGame = 10
 }

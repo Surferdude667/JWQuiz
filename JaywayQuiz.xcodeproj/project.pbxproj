@@ -17,7 +17,9 @@
 		F633C9182383E503003B7101 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F633C9172383E503003B7101 /* Assets.xcassets */; };
 		F633C91B2383E503003B7101 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F633C9192383E503003B7101 /* LaunchScreen.storyboard */; };
 		F6341FA923895C01004F2758 /* DataFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6341FA823895C01004F2758 /* DataFetch.swift */; };
-		F66560BB238BF36B00E7D9FD /* ColorAndAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66560BA238BF36B00E7D9FD /* ColorAndAnimation.swift */; };
+		F66560BB238BF36B00E7D9FD /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66560BA238BF36B00E7D9FD /* Color.swift */; };
+		F6698568238C754C00E117E9 /* MusicHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6698567238C754C00E117E9 /* MusicHelper.swift */; };
+		F669856A238C75CE00E117E9 /* Demoiselle.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F6698569238C75CE00E117E9 /* Demoiselle.mp3 */; };
 		F6750B8E238C411600271ABC /* DesignableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6750B70238C411500271ABC /* DesignableImageView.swift */; };
 		F6750B8F238C411600271ABC /* KeyboardLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6750B71238C411500271ABC /* KeyboardLayoutConstraint.swift */; };
 		F6750B90238C411600271ABC /* TransitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6750B72238C411500271ABC /* TransitionManager.swift */; };
@@ -56,7 +58,7 @@
 		F60BF2E3238813ED00B77200 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		F6224EBA238BB1AC0048BF7D /* FeltTipRoman-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "FeltTipRoman-Bold.otf"; sourceTree = "<group>"; };
 		F6224EBB238BB1AC0048BF7D /* FeltTipRoman-Heavy.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "FeltTipRoman-Heavy.otf"; sourceTree = "<group>"; };
-		F633C90B2383E503003B7101 /* JaywayQuiz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JaywayQuiz.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F633C90B2383E503003B7101 /* Swifty Quiz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Swifty Quiz.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F633C90E2383E503003B7101 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F633C9102383E503003B7101 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		F633C9122383E503003B7101 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
@@ -65,7 +67,9 @@
 		F633C91A2383E503003B7101 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F633C91C2383E503003B7101 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F6341FA823895C01004F2758 /* DataFetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFetch.swift; sourceTree = "<group>"; };
-		F66560BA238BF36B00E7D9FD /* ColorAndAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorAndAnimation.swift; sourceTree = "<group>"; };
+		F66560BA238BF36B00E7D9FD /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		F6698567238C754C00E117E9 /* MusicHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicHelper.swift; sourceTree = "<group>"; };
+		F6698569238C75CE00E117E9 /* Demoiselle.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Demoiselle.mp3; sourceTree = "<group>"; };
 		F6750B70238C411500271ABC /* DesignableImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DesignableImageView.swift; sourceTree = "<group>"; };
 		F6750B71238C411500271ABC /* KeyboardLayoutConstraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardLayoutConstraint.swift; sourceTree = "<group>"; };
 		F6750B72238C411500271ABC /* TransitionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionManager.swift; sourceTree = "<group>"; };
@@ -133,7 +137,7 @@
 		F633C90C2383E503003B7101 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F633C90B2383E503003B7101 /* JaywayQuiz.app */,
+				F633C90B2383E503003B7101 /* Swifty Quiz.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -147,6 +151,7 @@
 				F6847B6623882BB000055154 /* ViewControllers */,
 				F6847B6723882BE300055154 /* Storyboards */,
 				F6224EB9238BB1830048BF7D /* Fonts */,
+				F6698569238C75CE00E117E9 /* Demoiselle.mp3 */,
 				F633C9172383E503003B7101 /* Assets.xcassets */,
 				F633C91C2383E503003B7101 /* Info.plist */,
 			);
@@ -225,7 +230,8 @@
 				F6D128CA23872CCF001124D2 /* Result.swift */,
 				F6C444012384034400174156 /* Question.swift */,
 				F6847B6A23882EDB00055154 /* Configuration.swift */,
-				F66560BA238BF36B00E7D9FD /* ColorAndAnimation.swift */,
+				F66560BA238BF36B00E7D9FD /* Color.swift */,
+				F6698567238C754C00E117E9 /* MusicHelper.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -247,7 +253,7 @@
 			);
 			name = JaywayQuiz;
 			productName = JaywayQuiz;
-			productReference = F633C90B2383E503003B7101 /* JaywayQuiz.app */;
+			productReference = F633C90B2383E503003B7101 /* Swifty Quiz.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -294,6 +300,7 @@
 				F6750BA2238C411600271ABC /* LoadingView.xib in Resources */,
 				F633C9162383E503003B7101 /* Main.storyboard in Resources */,
 				F6224EBC238BB1AC0048BF7D /* FeltTipRoman-Bold.otf in Resources */,
+				F669856A238C75CE00E117E9 /* Demoiselle.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -326,7 +333,7 @@
 				F633C90F2383E503003B7101 /* AppDelegate.swift in Sources */,
 				F6341FA923895C01004F2758 /* DataFetch.swift in Sources */,
 				F6750B93238C411600271ABC /* Spring.swift in Sources */,
-				F66560BB238BF36B00E7D9FD /* ColorAndAnimation.swift in Sources */,
+				F66560BB238BF36B00E7D9FD /* Color.swift in Sources */,
 				F6750B9A238C411600271ABC /* SpringTextView.swift in Sources */,
 				F633C9112383E503003B7101 /* SceneDelegate.swift in Sources */,
 				F6C444032384064C00174156 /* Question.swift in Sources */,
@@ -338,6 +345,7 @@
 				F6750B97238C411600271ABC /* BlurView.swift in Sources */,
 				F6750BA1238C411600271ABC /* AsyncButton.swift in Sources */,
 				F6750B9D238C411600271ABC /* DesignableButton.swift in Sources */,
+				F6698568238C754C00E117E9 /* MusicHelper.swift in Sources */,
 				F6750BA5238C411600271ABC /* AutoTextView.swift in Sources */,
 				F6750B95238C411600271ABC /* DesignableLabel.swift in Sources */,
 				F6750B91238C411600271ABC /* TransitionZoom.swift in Sources */,
@@ -492,7 +500,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = art.bjornlau.JaywayQuiz;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Swifty Quiz";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -510,7 +518,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = art.bjornlau.JaywayQuiz;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Swifty Quiz";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

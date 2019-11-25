@@ -8,12 +8,13 @@
 
 import Foundation
 import UIKit
+import AVFoundation
 
 class WelcomeViewController: UIViewController {
     
+    var player: AVAudioPlayer?
     
     @IBOutlet weak var startGameButton: SpringButton!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,9 +29,9 @@ class WelcomeViewController: UIViewController {
         startGameButton.damping = 1.0
         startGameButton.velocity = 0.0
         startGameButton.animate()
-        
+
+        MusicHelper.sharedHelper.playBackgroundMusic()
     }
-    
     
     @IBAction func startGameButton(_ sender: Any) {
         performSegue(withIdentifier: "presentGame", sender: self)
