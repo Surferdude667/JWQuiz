@@ -17,7 +17,7 @@ class Configuration {
     var numberOfFiftyFifty = 1
     
     //  The amount of ms left in the game when 50/50 is activated.
-    let numberOfMsLeftToActivateFiftyFifty: Double = 10000
+    let numberOfMsLeftToActivateFiftyFifty: Double = 13000
     
     //  Number of extra secounds liflines allowed in game.
     var numberOfExtraSeconds = 1

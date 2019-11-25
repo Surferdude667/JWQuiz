@@ -83,22 +83,18 @@ class GameViewController: UIViewController {
             currentGameTime! -= 1.0
         } else {
             questionTimer.invalidate()
-            timeLabel.text = "Bunkers!"
             resutlUnanswered += 1
             presentNextQuestion()
-            print("TIME PASSED! Moving on...")
         }
         
-        if currentGameTime < 5000 {
-            extraSecondsLabel.tintColor = UIColor.orange
+        if currentGameTime < config.numberOfMillisecondsForQuestion - config.numberOfPlusMiliseconds && config.numberOfExtraSeconds != 0  {
+            extraSecondsLabel.setBackgroundImage(UIImage(named: "plus10_active"), for: .normal)
+            extraSecondsLabel.isUserInteractionEnabled = true
         }
         
-        if currentGameTime < config.numberOfMillisecondsForQuestion - config.numberOfPlusMiliseconds  {
-            extraSecondsLabel.tintColor = UIColor.orange
-        }
-        
-        if currentGameTime < config.numberOfMsLeftToActivateFiftyFifty {
-            fiftyFiftyLabel.tintColor = UIColor.orange
+        if currentGameTime < config.numberOfMsLeftToActivateFiftyFifty && config.numberOfFiftyFifty != 0 {
+            fiftyFiftyLabel.setBackgroundImage(UIImage(named: "fiftyfifty_active"), for: .normal)
+            fiftyFiftyLabel.isUserInteractionEnabled = true
         }
     }
     
@@ -109,15 +105,22 @@ class GameViewController: UIViewController {
         questionImageLabel.image = nil
         
         for i in 0..<self.answerLabel.count {
-            self.answerLabel[i].tintColor = .systemBlue
+            //self.answerLabel[i].setTitleColor(UIColor.black, for: .normal)
+            self.answerLabel[i].backgroundColor = UIColor.white
+            self.answerLabel[i].alpha = 1.0
+            self.answerLabel[i].setTitleColor(ColorAndAnimation().swiftyGreen, for: .normal)
         }
         
+        fiftyFiftyLabel.isUserInteractionEnabled = false
         if config.numberOfFiftyFifty != 0 {
-            fiftyFiftyLabel.isHidden = false
+            fiftyFiftyLabel.setBackgroundImage(UIImage(named: "fiftyfifty_inactive"), for: .normal)
+            fiftyFiftyLabel.alpha = 1.0
         }
         
+        extraSecondsLabel.isUserInteractionEnabled = false
         if config.numberOfExtraSeconds != 0 {
-            extraSecondsLabel.isHidden = false
+            extraSecondsLabel.setBackgroundImage(UIImage(named: "plus10_inactive"), for: .normal)
+            extraSecondsLabel.alpha = 1.0
         }
     }
     
@@ -144,6 +147,7 @@ class GameViewController: UIViewController {
             questionLabel.text = nil
             imageQuestionLabel.text = currentPresentedQuestion.questionString
         }
+        
     }
     
     //  Remove the answer from the current game list.
@@ -161,11 +165,13 @@ class GameViewController: UIViewController {
     }
     
     
+    //  Move to animation file
     func setView(view: UIView, hidden: Bool) {
         UIView.transition(with: view, duration: 0.5, options: .transitionCrossDissolve, animations: {
             view.isHidden = hidden
         })
     }
+    
     
     //  Fires the next question.
     func presentNextQuestion() {
@@ -178,11 +184,7 @@ class GameViewController: UIViewController {
             if self.questionsInCurrentGame.count != 0 {
                 self.presentQuestion()
             } else if self.questionsInCurrentGame.count == 0 {
-                //self.questionLabel.text = "Game is over!"
-                //self.resultOverlay.isHidden = false
-                
                 self.setView(view: self.resultOverlay, hidden: false)
-                
             }
         }
     }
@@ -190,10 +192,8 @@ class GameViewController: UIViewController {
     //  Checks if the answer selected is correct.
     func checkAnswer(answer: String) -> Bool {
         if answer == currentCorrectAnswer {
-            print("Correct answer!")
             return true
         } else {
-            print("Wrong answer!")
             return false
         }
     }
@@ -204,35 +204,27 @@ class GameViewController: UIViewController {
     }
     
     
-    //  ----------- ACTIONS -----------
-    
     @IBAction func seeResultButton(_ sender: Any) {
         self.performSegue(withIdentifier: "presentResult", sender: self)
     }
     
+    //  ----------- ACTIONS -----------
+        
     
     @IBAction func extraSecondsButton(_ sender: UIButton) {
-        sender.isHidden = true
+        extraSecondsLabel.isUserInteractionEnabled = false
+        extraSecondsLabel.alpha = 0.5
         resultLifelinesUsed += 1
-        
-        if config.numberOfExtraSeconds > 0 {
-            config.numberOfExtraSeconds -= 1
-            currentGameTime += config.numberOfPlusMiliseconds
-        } else {
-            print("+10 already used")
-        }
+        config.numberOfExtraSeconds -= 1
+        currentGameTime += config.numberOfPlusMiliseconds
     }
     
     @IBAction func fiftyFiftyButton(_ sender: UIButton) {
-        sender.isHidden = true
+        fiftyFiftyLabel.isUserInteractionEnabled = false
+        fiftyFiftyLabel.alpha = 0.5
         resultLifelinesUsed += 1
-        
-        if config.numberOfFiftyFifty > 0 {
-            fiftyFifty()
-            config.numberOfFiftyFifty -= 1
-        } else {
-            print("50/50 already used")
-        }
+        config.numberOfFiftyFifty -= 1
+        fiftyFifty()
     }
     
     
@@ -242,11 +234,12 @@ class GameViewController: UIViewController {
         
         if let buttonTitle = sender.title(for: .normal) {
             if checkAnswer(answer: buttonTitle) {
-                sender.setTitleColor(UIColor.green, for: .normal)
-                sender.backgroundColor = UIColor.red
+                sender.setTitleColor(UIColor.black, for: .normal)
+                sender.backgroundColor = ColorAndAnimation().correctGreen
                 resultCorrectAnswer += 1
             } else {
-                sender.tintColor = UIColor.red
+                sender.setTitleColor(UIColor.black, for: .normal)
+                sender.backgroundColor = ColorAndAnimation().wrongRed
                 resultWrongAnswer += 1
             }
         }

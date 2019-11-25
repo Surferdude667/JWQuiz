@@ -105,7 +105,7 @@
                                     <constraint firstAttribute="width" constant="184" id="9Ca-SF-tIA"/>
                                     <constraint firstAttribute="height" constant="90" id="lsY-cy-kll"/>
                                 </constraints>
-                                <state key="normal" backgroundImage="plus10_active">
+                                <state key="normal" backgroundImage="plus10_inactive">
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
                                 </state>
                                 <connections>
@@ -118,7 +118,7 @@
                                     <constraint firstAttribute="width" constant="184" id="Cdm-qu-E2J"/>
                                     <constraint firstAttribute="height" constant="91" id="gG6-Ka-yad"/>
                                 </constraints>
-                                <state key="normal" backgroundImage="fiftyfifty_active"/>
+                                <state key="normal" backgroundImage="fiftyfifty_inactive"/>
                                 <connections>
                                     <action selector="fiftyFiftyButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GIn-BD-UVC"/>
                                 </connections>
@@ -429,9 +429,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="fiftyfifty_active" width="184" height="91"/>
+        <image name="fiftyfifty_inactive" width="184" height="91"/>
         <image name="game_background" width="414" height="896"/>
-        <image name="plus10_active" width="184" height="90"/>
+        <image name="plus10_inactive" width="184" height="90"/>
         <image name="result_background" width="414" height="896"/>
         <image name="swifty_quiz_logo" width="1000" height="1000"/>
         <image name="welcome_background" width="414" height="896"/>

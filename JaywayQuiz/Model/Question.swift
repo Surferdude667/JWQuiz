@@ -68,7 +68,6 @@ class Question {
         //  MARKS THE QUESTION THAT HAVE BEEN PRESENTED IN THIS ROUND AS .USED IN ORIGINAL DATA.
         if let index = questionArray.firstIndex(where: { $0.questionID == questionToRemove.questionID }) {
             questionArray[index].isQuestionUsed = .used
-            print(questionArray[index].questionID)
         }
     }
     
