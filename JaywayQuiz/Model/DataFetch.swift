@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+let notificationCenter = NotificationCenter.default
 var questionArray = [Question]()
 
 struct DataFetch: Codable {
@@ -31,7 +32,10 @@ struct DataFetch: Codable {
                                                           questionImage: result[i].questionImage,
                                                           answers: result[i].answers,
                                                           correctAnswer: result[i].correctAnswer))
+                            
                         }
+                        notificationCenter.post(name: Notification.Name("QuestionDataLoaded"), object: nil)
+                        
                     } catch let error {
                         print(error)
                     }
@@ -42,20 +46,17 @@ struct DataFetch: Codable {
     
     
     static func fetchImage(url: String, CompletionHandler: @escaping (UIImage?) -> Void) {
-      let url = URL(string: "https://bjornlau.com/\(url)")!
-      let task = URLSession.shared.dataTask(with: url, completionHandler: { data, response, error in
-
-        guard let data = data else { return }
-        do {
-            
-            if let image = UIImage(data: data) {
-                CompletionHandler(image)
+        let url = URL(string: "https://bjornlau.com/\(url)")!
+        
+        let task = URLSession.shared.dataTask(with: url, completionHandler: { data, response, error in
+            guard let data = data else { return }
+            do {
+                if let image = UIImage(data: data) {
+                    CompletionHandler(image)
+                }
             }
-            
-        }
-      })
-      task.resume()
+        })
+        task.resume()
     }
-    
     
 }

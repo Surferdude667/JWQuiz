@@ -16,24 +16,35 @@ class WelcomeViewController: UIViewController {
     
     @IBOutlet weak var startGameButton: SpringButton!
     
+    @objc func activatePlayButton() {
+        DispatchQueue.main.async {
+            self.startGameButton.alpha = 1.0
+            self.startGameButton.isUserInteractionEnabled = true
+            self.startGameButton.animation = "pop"
+            self.startGameButton.curve = "easeInOut"
+            self.startGameButton.duration = 1.5
+            self.startGameButton.scaleX = 1.8
+            self.startGameButton.scaleY = 1.8
+            self.startGameButton.damping = 1.0
+            self.startGameButton.velocity = 0.0
+            self.startGameButton.animate()
+        }
+    }
+    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        //DataFetch.setImageToImageView()
+
+        startGameButton.isUserInteractionEnabled = false
+        startGameButton.alpha = 0.5
+        
+        notificationCenter.addObserver(self, selector: #selector(activatePlayButton), name: Notification.Name("QuestionDataLoaded"), object: nil)
         
         DataFetch.fetchQuestion()
-        
-        startGameButton.animation = "pop"
-        startGameButton.curve = "easeInOut"
-        startGameButton.duration = 1.5
-        startGameButton.scaleX = 1.8
-        startGameButton.scaleY = 1.8
-        startGameButton.rotate = 2.4
-        startGameButton.damping = 1.0
-        startGameButton.velocity = 0.0
-        startGameButton.animate()
-
         MusicHelper.sharedHelper.playBackgroundMusic()
     }
+    
+    
     
     @IBAction func startGameButton(_ sender: Any) {
         performSegue(withIdentifier: "presentGame", sender: self)
