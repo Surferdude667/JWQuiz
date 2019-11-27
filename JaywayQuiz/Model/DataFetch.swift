@@ -9,23 +9,6 @@
 import Foundation
 import UIKit
 
-extension UIImageView {
-   func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
-      URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
-   }
-   func fetchImage(from url: URL) {
-      getData(from: url) {
-         data, response, error in
-         guard let data = data, error == nil else {
-            return
-         }
-         DispatchQueue.main.async() {
-            self.image = UIImage(data: data)
-         }
-      }
-   }
-}
-
 var questionArray = [Question]()
 
 struct DataFetch: Codable {
@@ -35,7 +18,7 @@ struct DataFetch: Codable {
     let answers: [String]
     let correctAnswer: String
     
-    static func fetchQuestionData()  {
+    static func fetchQuestion()  {
         if let url = URL(string: "https://bjornlau.com/API/questions_final.json") {
             URLSession.shared.dataTask(with: url) { data, response, error in
                 if let data = data {
@@ -56,5 +39,23 @@ struct DataFetch: Codable {
             }.resume()
         }
     }
+    
+    
+    static func fetchImage(url: String, CompletionHandler: @escaping (UIImage?) -> Void) {
+      let url = URL(string: "https://bjornlau.com/\(url)")!
+      let task = URLSession.shared.dataTask(with: url, completionHandler: { data, response, error in
+
+        guard let data = data else { return }
+        do {
+            
+            if let image = UIImage(data: data) {
+                CompletionHandler(image)
+            }
+            
+        }
+      })
+      task.resume()
+    }
+    
     
 }

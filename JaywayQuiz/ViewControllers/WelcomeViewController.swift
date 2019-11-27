@@ -18,7 +18,9 @@ class WelcomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        DataFetch.fetchQuestionData()
+        //DataFetch.setImageToImageView()
+        
+        DataFetch.fetchQuestion()
         
         startGameButton.animation = "pop"
         startGameButton.curve = "easeInOut"

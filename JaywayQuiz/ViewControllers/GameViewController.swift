@@ -162,10 +162,17 @@ class GameViewController: UIViewController {
             questionLabel.text = currentPresentedQuestion.questionString
             imageQuestionLabel.text = nil
         } else {
-            let url = URL(string: "https://bjornlau.com\(currentPresentedQuestion.questionImage)")!
-            self.questionImageView.fetchImage(from: url)
             questionLabel.text = nil
             imageQuestionLabel.text = currentPresentedQuestion.questionString
+            
+            // MAKE ELSE HERE...
+            DataFetch.fetchImage(url: "\(currentPresentedQuestion.questionImage)", CompletionHandler: {image in
+              if let currentImage = image {
+                DispatchQueue.main.async {
+                    self.questionImageView.image = currentImage
+                }
+              }
+            })
         }
         
     }
