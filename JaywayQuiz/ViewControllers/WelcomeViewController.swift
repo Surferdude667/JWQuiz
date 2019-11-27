@@ -22,9 +22,7 @@ class WelcomeViewController: UIViewController {
             self.startGameButton.isUserInteractionEnabled = true
             self.startGameButton.animation = "pop"
             self.startGameButton.curve = "easeInOut"
-            self.startGameButton.duration = 1.5
-            self.startGameButton.scaleX = 1.8
-            self.startGameButton.scaleY = 1.8
+            self.startGameButton.duration = 1.0
             self.startGameButton.damping = 1.0
             self.startGameButton.velocity = 0.0
             self.startGameButton.animate()
