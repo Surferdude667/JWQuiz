@@ -20,6 +20,7 @@ class WelcomeViewController: UIViewController {
         DispatchQueue.main.async {
             self.startGameButton.alpha = 1.0
             self.startGameButton.isUserInteractionEnabled = true
+            
             self.startGameButton.animation = "pop"
             self.startGameButton.curve = "easeInOut"
             self.startGameButton.duration = 1.0
