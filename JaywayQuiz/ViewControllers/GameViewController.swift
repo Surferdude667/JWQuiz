@@ -149,7 +149,7 @@ class GameViewController: UIViewController {
     func presentQuestion() {
         currentPresentedQuestion = questionsInCurrentGame[0]
         currentCorrectAnswer = currentPresentedQuestion.correctAnswer
-        Question.markQuestionsAsUsed(questionToRemove: currentPresentedQuestion)
+        Question.markQuestionsAsUsed(question: currentPresentedQuestion)
         resetControls()
         
         //  Sets the labels to the current answers.
@@ -165,8 +165,7 @@ class GameViewController: UIViewController {
             questionLabel.text = nil
             imageQuestionLabel.text = currentPresentedQuestion.questionString
             
-            // MAKE ELSE HERE...
-            DataFetch.fetchImage(url: "\(currentPresentedQuestion.questionImage)", CompletionHandler: {image in
+            DataFetch.fetchImage(urlPath: "\(currentPresentedQuestion.questionImage)", CompletionHandler: {image in
               if let currentImage = image {
                 DispatchQueue.main.async {
                     self.questionImageView.image = currentImage
@@ -191,7 +190,7 @@ class GameViewController: UIViewController {
         }
     }
     
-    //  Move to animation file
+    //  Animates view from hidden.
     func setView(view: UIView, hidden: Bool) {
         UIView.transition(with: view, duration: 0.5, options: .transitionCrossDissolve, animations: {
             view.isHidden = hidden

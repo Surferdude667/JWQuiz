@@ -8,10 +8,6 @@
 
 import Foundation
 
-
-//ADD AVERAGE TIME!
-
-//  USED FOR RESULT
 var resultPack: Result?
 var resultTime = [Double]()
 var resultCorrectAnswer: Int!

@@ -45,11 +45,14 @@ struct DataFetch: Codable {
     }
     
     
-    static func fetchImage(url: String, CompletionHandler: @escaping (UIImage?) -> Void) {
-        let url = URL(string: "https://bjornlau.com/\(url)")!
+    static func fetchImage(urlPath: String, CompletionHandler: @escaping (UIImage?) -> Void) {
+        let url = URL(string: "https://bjornlau.com/\(urlPath)")!
         
         let task = URLSession.shared.dataTask(with: url, completionHandler: { data, response, error in
-            guard let data = data else { return }
+            guard let data = data else {
+                print("Could not fetch image...")
+                return
+            }
             do {
                 if let image = UIImage(data: data) {
                     CompletionHandler(image)

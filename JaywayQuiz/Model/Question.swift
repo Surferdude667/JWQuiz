@@ -64,9 +64,9 @@ class Question {
        return gameReadyQuestions
     }
     
-    static func markQuestionsAsUsed(questionToRemove: Question) {
+    static func markQuestionsAsUsed(question: Question) {
         //  MARKS THE QUESTION THAT HAVE BEEN PRESENTED IN THIS ROUND AS .USED IN ORIGINAL DATA.
-        if let index = questionArray.firstIndex(where: { $0.questionID == questionToRemove.questionID }) {
+        if let index = questionArray.firstIndex(where: { $0.questionID == question.questionID }) {
             questionArray[index].isQuestionUsed = .used
         }
     }
